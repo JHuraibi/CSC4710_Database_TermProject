@@ -29,9 +29,7 @@
 				<tr>
 					<th>Name:</th>
 					<td>
-						<input
-								type="text" name="name" size="45"
-								autofocus="autofocus" required="required"/>
+						<input type="text" name="name" size="45" autofocus="autofocus" required/>
 					</td>
 				</tr>
 				<tr>
@@ -39,8 +37,7 @@
 					<td>
 					<textarea
 							name="species" minlength="2" maxlength="12"
-							cols="45" rows="1"
-							pattern="[A-Za-z]" required="required"
+							cols="45" rows="1" pattern="[A-Za-z]" required
 							value="<c:out value='${animal.species}' />"
 					></textarea>
 					</td>
@@ -51,14 +48,14 @@
 						<!-- Checking date w/ JSP: https://bit.ly/2QZbzsy -->
 						<input
 								type="date" name="birthDate" min="1980-01-01" size="45"
-								required="required" value="<c:out value='${animal.birthDate}' />"/>
+								required value="<c:out value='${animal.birthDate}' />"/>
 					</td>
 				</tr>
 				<tr>
 					<th>Adoption Price: $</th>
 					<td>
 						<input type="number" name="adoptionPrice" min="0" maxlength="5" size="45"
-							   required="required" value="<c:out value='${animal.adoptionPrice}' />"
+							   required value="<c:out value='${animal.adoptionPrice}' />"
 						/>
 					</td>
 				</tr>
@@ -70,7 +67,7 @@
 						<textarea
 								id="traits" name="traits"
 								cols="45" rows="2" maxlength="60" wrap="soft"
-								pattern="[A-Za-z ]" required="required"
+								pattern="[A-Za-z ]" required
 						></textarea>
 					</td>
 				</tr>
@@ -89,7 +86,7 @@
 </html>
 
 
-<!-- CSS here for now 🙃🙃🙃 -->
+<!-- CSS here for now 🙃 🙃 🙃 -->
 <style>
 	/*-- Class Selectors --*/
 	.text {
@@ -141,7 +138,7 @@
 	header {
 		background-color: #000033;
 		color: #ffffff;
-		font-family: Georgia, serif;
+		font-family: Verdana, Arial, sans-serif;
 	}
 	
 	body {
@@ -198,7 +195,7 @@
 	
 	h2 {
 		color: #3399CC;
-		font-family: Georgia, serif;
+		font-family: Verdana, Arial, sans-serif;
 	}
 	
 	h3 {

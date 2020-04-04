@@ -1,60 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!--------------------------------------->
+<!-- FORMERLY: UserForm.jsp -->
+<!-- Added 's' to match UsersList.jsp -->
+<!--------------------------------------->
+
 <html>
 <head>
-	<title>User Management Application</title>
+	<title>New User Signup</title>
 </head>
 <body>
-	<%
-		if (session == null) {
-			System.out.println("index.jsp: USER NULL");
-			response.sendRedirect("UsersList.jsp");                // No user session established, reroute to login page
-		}
-	%>
-	<div>
-		<h1>All Breeders</h1>
-		<h2>
-			<a href="new">Add New User</a>
-			&nbsp;&nbsp;&nbsp;
-			<a href="list">List All User</a>
-		</h2>
-	</div>
 	<div id="wrapper">
-		<table border="1" cellpadding="5">
-			<caption><h2>List of Current Users</h2></caption>
-			<tr>
-				<th>Username</th>
-				
-				<!-- Hide password info unless Root user -->
-				<c:if test="${sessionScope.sUsername == root}">
-					<th>Password</th>
-				</c:if>
-				
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Email</th>
-			</tr>
-			<c:forEach var="user" items="${listUsers}">
+		<!-- TODO: Edit page title according to User existence -->
+		<header>
+			<h1>New User Information Form</h1>
+		</header>
+	</div>
+	<div align="center">
+		<form action="InsertUser" method="post">
+			<table border="1" cellpadding="5">
 				<tr>
-					<td><c:out value="${user.username}"/></td>
-					
-					<c:if test="${sessionScope.sUsername == root}">
-						<td><c:out value="${user.password}"/></td>
-					</c:if>
-					
-					<td><c:out value="${user.firstName}"/></td>
-					<td><c:out value="${user.lastName}"/></td>
-					<td><c:out value="${user.email}"/></td>
+					<th>Username:</th>
 					<td>
-						<a href="edit?id=<c:out value='${user.username}' />">Edit</a>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="delete?id=<c:out value='${user.username}' />">Delete</a>
+						<input type="text" name="username"/>
 					</td>
 				</tr>
-			</c:forEach>
-		</table>
+				<tr>
+					<!-- IF TIME: Implement a "passwords must match" feature -->
+					<th>Password:</th>
+					<td>
+						<input type="password" name="password" size="45" required/>
+					</td>
+				</tr>
+				<tr>
+					<th>First Name:</th>
+					<td>
+						<input type="text" name="firstName" size="45"/>
+					</td>
+				</tr>
+				<tr>
+					<th>Last Name:</th>
+					<td>
+						<input type="text" name="lastName" size="45"/>
+					</td>
+				</tr>
+				<tr>
+					<th>Email:</th>
+					<td>
+						<input type="email" name="email" size="45"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Register"/>
+						<input type="reset" value="Clear all Fields">
+					</td>
+				</tr>
+			</table>
+		</form>
+		<a href="Login.jsp">Cancel</a>
 	</div>
 </body>
 </html>
@@ -62,16 +67,6 @@
 
 <!-- CSS here for now 🙃 🙃 🙃 -->
 <style>
-	/*-- Class Selectors --*/
-	.text {
-		text-align: left;
-	}
-	
-	.resort {
-		font-size: 1.2em;
-		color: #000033;
-	}
-	
 	/*--| id Selectors |--*/
 	#wrapper {
 		background-color: #90c7e3;
@@ -81,7 +76,10 @@
 		margin-left: auto;
 		margin-right: auto;
 		width: 80%;
+		/*font-family: Verdana, Arial, sans-serif;*/
+		font-family:
 	}
+	
 	
 	/*--| Element Selectors |--*/
 	table {

@@ -192,7 +192,7 @@
       <workItem from="1585890227498" duration="1443000" />
       <workItem from="1585941143831" duration="20097000" />
       <workItem from="1585965067299" duration="149000" />
-      <workItem from="1585965232819" duration="7941000" />
+      <workItem from="1585965232819" duration="11786000" />
     </task>
     <servers />
   </component>
@@ -300,6 +300,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="196" height="457" key="HiddenNamespacesPopup/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1585787502984" />
+    <state x="860" y="444" width="1341" height="795" key="IDE.errors.dialog" timestamp="1585974097457">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="860" y="444" width="1341" height="795" key="IDE.errors.dialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1585974097457" />
     <state x="520" y="176" width="1562" height="1045" key="SettingsEditor" timestamp="1585968060032">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -357,11 +361,11 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="432" y="484" key="extract.method.dialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1584734303067" />
-    <state x="912" y="182" width="1042" height="942" key="find.popup" timestamp="1585972071525">
+    <state x="912" y="182" width="1042" height="942" key="find.popup" timestamp="1585977061292">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="-988" y="5" width="942" height="750" key="find.popup/0.0.2560.1400/-1050.0.1050.1640@-1050.0.1050.1640" timestamp="1585606038976" />
-    <state x="912" y="182" width="1042" height="942" key="find.popup/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1585972071525" />
+    <state x="912" y="182" width="1042" height="942" key="find.popup/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1585977061292" />
     <state x="-783" y="440" key="refactoring.ChangeSignatureDialog" timestamp="1584843144767">
       <screen x="-1050" y="0" width="1050" height="1640" />
     </state>

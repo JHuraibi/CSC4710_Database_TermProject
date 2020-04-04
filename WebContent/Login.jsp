@@ -13,37 +13,32 @@
 	<div id="wrapper">
 		<fieldset>
 			<legend>Enter your Username and Password</legend>
-			<!-- If-time: Make only asterisks red -->
-			<!-- Check: id="loginForm"? -->
 			<form action="CheckLogin" method="post" id="loginForm">
 				<label for="username">*Username</label>
-				<input name="username" id="username" type="text" autofocus="autofocus" required="required">
+				<input name="username" id="username" type="text" autofocus="autofocus" required>
 				<br>
 				<label for="password">*Password</label>
-				<input name="password" id="password" type="password" required="required">
+				<input name="password" id="password" type="password" required>
 				<br>
 				<input type="submit" value="Login" align="middle">
 				<c:if test="${loggedOut == true}">
 					<p>Logged Out Successfully</p>
 				</c:if>
 				<br><br><br>
-				<a href="NewUser">Don't have an Account? Click Here to Register.</a>
+				<a href="NewUsersForm.jsp" style="font-size: small">
+					Don't have an Account? Click Here to Register.
+				</a>
 			</form>
 		</fieldset>
 	</div>
 </body>
 </html>
 
-<!-- CSS here for now 🙃🙃🙃 -->
+<!-- CSS here for now 🙃 🙃 🙃 -->
 <style>
 	/*-- Class Selectors --*/
 	.text {
 		text-align: left;
-	}
-	
-	.resort {
-		font-size: 1.2em;
-		color: #000033;
 	}
 	
 	/*--| id Selectors |--*/
@@ -58,6 +53,10 @@
 	}
 	
 	/*--| Element Selectors |--*/
+	label{
+		padding: 50px;
+		font-family: Verdana, Arial, sans-serif;
+	}
 	
 	table {
 		margin: auto;
@@ -90,7 +89,7 @@
 	header {
 		background-color: #000033;
 		color: #ffffff;
-		font-family: Georgia, serif;
+		font-family: Verdana, Arial, sans-serif;
 	}
 	
 	body {
@@ -104,6 +103,10 @@
 		float: left;
 		width: 160px;
 		padding: 20px 5px 0 20px;
+	}
+	
+	a {
+		text-decoration: none;
 	}
 	
 	nav a {
@@ -147,7 +150,7 @@
 	
 	h2 {
 		color: #3399CC;
-		font-family: Georgia, serif;
+		font-family: Verdana, Arial, sans-serif;
 	}
 	
 	h3 {

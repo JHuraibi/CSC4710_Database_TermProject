@@ -39,7 +39,7 @@
 		%>
 		<p>Select Trait :
 			<!-- Attribute "required" prevents a null-pointer exception -->
-			<select name="traits" required="required">
+			<select name="traits" required>
 				<%
 					StringBuilder trait = new StringBuilder(" ");
 					while (resultSet.next()) {
@@ -70,7 +70,7 @@
 </html>
 
 
-<!-- CSS here for now 🙃🙃🙃 -->
+<!-- CSS here for now 🙃 🙃 🙃 -->
 <style>
 	/*-- Class Selectors --*/
 	.text {
@@ -124,7 +124,7 @@
 	header {
 		background-color: #000033;
 		color: #ffffff;
-		font-family: Georgia, serif;
+		font-family: Verdana, Arial, sans-serif;
 	}
 	
 	body {
@@ -181,7 +181,7 @@
 	
 	h2 {
 		color: #3399CC;
-		font-family: Georgia, serif;
+		font-family: Verdana, Arial, sans-serif;
 	}
 	
 	h3 {

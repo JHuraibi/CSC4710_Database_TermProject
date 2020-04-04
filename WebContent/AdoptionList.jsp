@@ -21,7 +21,7 @@
 		<nav>
 			<ul>
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UsersForm.jsp">Edit User Information</a></li>
+				<li><a href="UpdateUsersForm.jsp">Edit User Information</a></li>
 				<li><a href="index.jsp">My Account</a></li>
 			</ul>
 		</nav>
@@ -63,7 +63,7 @@
 </html>
 
 
-<!-- CSS here for now 🙃🙃🙃 -->
+<!-- CSS here for now 🙃 🙃 🙃 -->
 <style>
 	/*-- Class Selectors --*/
 	.text {
@@ -115,7 +115,7 @@
 	header {
 		background-color: #000033;
 		color: #ffffff;
-		font-family: Georgia, serif;
+		font-family: Verdana, Arial, sans-serif;
 	}
 	
 	body {
@@ -172,7 +172,7 @@
 	
 	h2 {
 		color: #3399CC;
-		font-family: Georgia, serif;
+		font-family: Verdana, Arial, sans-serif;
 	}
 	
 	h3 {

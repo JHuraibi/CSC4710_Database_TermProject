@@ -90,6 +90,7 @@ public class TraitDAO {
         System.out.println("Traits Table: Initialized");
     }
 
+    /*
     // Extra Function for TESTING
     public void addInitial() throws SQLException {
         System.out.println("ADDING TRAITS");
@@ -103,7 +104,7 @@ public class TraitDAO {
         addTraitsToTable("dramatic", 8);
         addTraitsToTable("happy drooly hyper", 9);
         addTraitsToTable("happy drooly hyper", 10);
-    }
+    }*/
 
 
     public void addTraitsToTable(String traitRawData, int newAnimalID) throws SQLException {
@@ -131,8 +132,8 @@ public class TraitDAO {
 
         individualTraits = traitRawData.split(" ");                             // Store all the delimited strings
 
-        for(String test : individualTraits)
-            System.out.print(test);
+//      for(String test : individualTraits)
+//          System.out.print(test);
 
         return individualTraits;                                                // Return the String array
     }

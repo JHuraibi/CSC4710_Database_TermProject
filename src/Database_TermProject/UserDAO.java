@@ -249,7 +249,7 @@ public class UserDAO extends HttpServlet {
         boolean rowUpdated;
 
         connect_func();
-//"INSERT INTO users (username, password, firstName, lastName, email) VALUES (?, ?, ?, ?, ?)";
+
         SQL_updateUser = "UPDATE users SET username=?, password=?, firstName=?, lastName=?, email=?" +
                 "WHERE animalID = ?";
 

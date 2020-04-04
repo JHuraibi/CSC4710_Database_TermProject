@@ -131,21 +131,16 @@ public class ControlServlet extends HttpServlet {
                     // GOOD
                     checkLogin(request, response);                              // Verify login information
                     break;
-                /*case "/TestingForm":
-                    setUserForm();
-                    break;*/
                 case "/LogoutUser":
-                    // IMPLEMENT
-                    System.out.println("LOGOUT");
+                    // IN PROGRESS
                     logoutHelper(request, response);                            // Log out the current user
                     break;
-                case "/NewUser":
-                    // GOOD
-                    showNewUserForm(request, response);                         // Add a new user (Will load UsersForm.jsp)
-                    break;
+
+                // !! Note: [ case "/new" ] replaced with a simpler and more secure method (I think more secure)
+
                 case "/UpdateUser":
-                    // BAD (updating creates "user already exists" error)
-                    updateUser(request, response);                              // Update User information
+                    // IN PROGRESS
+                    updateUserForm(request, response);                          // Update User information
                     break;
                 case "/InsertUser":
                     // TEST
@@ -153,10 +148,6 @@ public class ControlServlet extends HttpServlet {
                     break;
                 case "/delete":
                     deleteUser(request, response);                              // Delete a user
-                    break;
-                // TODO: "Edit User" functionality not done
-                case "/edit":
-                    showEditForm(request, response);                            // Edit existing user (Will load: UsersForm.jsp)
                     break;
                 case "/ListBreeders":
                     // TEST
@@ -260,15 +251,6 @@ public class ControlServlet extends HttpServlet {
         response.sendRedirect("Login.jsp");                                     // Return to login page (since no user logged in)
     }
 
-
-    protected void showNewUserForm(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        dispatcher = request.getRequestDispatcher("UsersForm.jsp");             // Route user to registration form
-        dispatcher.forward(request, response);
-    }
-
-
     protected void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
@@ -334,7 +316,7 @@ public class ControlServlet extends HttpServlet {
     }
 
 
-    protected void updateUser(HttpServletRequest request, HttpServletResponse response)
+    protected void updateUserForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
 
         String username;
