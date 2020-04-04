@@ -1,0 +1,6 @@
+
+1. Statement: Used to implement simple SQL statements with no parameters.
+
+2. PreparedStatement: (Extends Statement.) Used for precompiling SQL statements that might contain input parameters. See Using Prepared Statements for more information.
+
+3. CallableStatement: (Extends PreparedStatement.) Used to execute stored procedures that may contain both input and output parameters. See Stored Procedures for more information.
