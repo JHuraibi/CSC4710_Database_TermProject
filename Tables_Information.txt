@@ -1,0 +1,77 @@
+Reference Outline of All Tables
+
+*This document is NOT up to date*
+
+---| User |---
+Attributes
+[ID: INTEGER, username: varchar(30) password: varchar(30),
+ firstName:  varchar(50), lastName:  varchar(50), email:  varchar(50)]
+
+Primary Key(s)
+[id, username]
+
+Foreign Key(s)
+[NONE]
+
+
+---| Animals |---
+Attributes
+[id:  INTEGER, name:  varchar(30), species:  varchar(24),
+ birthDate:  varchar(10), adoptionPrice: INTEGER, owner: varchar(30)]
+
+Primary Key(s)
+[id]
+
+Foreign Key(s)
+[NONE]
+
+
+---| Traits |---
+Attributes
+[trait: varchar(30), animalID: INTEGER]
+
+Primary Key(s)
+[trait, animalID]
+
+Foreign Key(s)
+[animalID, REF Animals(animalID)]
+
+
+---| Reviews |---
+!! Determine whether Reviews should have IDs !!
+Attributes
+[animalID: INTEGER, authorsUsername: varchar(30),
+ (*rating: DataTypeUnderReview*), comment: varchar(140)]
+
+Primary Key(s)
+[animalID]
+
+Foreign Key(s)
+[animalID, REF Animals(animalID)]
+[authorsUsername, REF Users(username)]
+
+
+---| FavAnimals |---
+Attributes
+[animalID: INTEGER, username: varchar(30)]
+
+Primary Key(s)
+[animalID, username]
+
+Foreign Key(s)
+[animalID, REF Animals(animalID)]
+[username, REF Users(username)]
+
+
+---| FavBreeders |---
+Attributes
+[breederID: INTEGER, username: INTEGER]
+
+Primary Key(s)
+[breederID, username]
+
+Foreign Key(s)
+[breederID, REF Users(id)]
+[username, REF Users(username)]
+
+
