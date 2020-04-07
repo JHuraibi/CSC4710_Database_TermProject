@@ -10,10 +10,9 @@
 </head>
 <body>
 	<%
-		// Verify a user logged in
 		if (session == null) {
 			System.out.println("index.jsp: USER NULL");
-			response.sendRedirect("UserAccount.jsp");
+			response.sendRedirect("UserAccount.jsp");                // No user session established, reroute to login page
 		}
 	%>
 	<div id="wrapper">

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+		 pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -6,10 +7,9 @@
 </head>
 <body>
 	<%
-		// Verify a user logged in
 		if (session == null) {
 			System.out.println("index.jsp: USER NULL");
-			response.sendRedirect("AnimalForm.jsp");
+			response.sendRedirect("AnimalForm.jsp");                // No user session established, reroute to login page
 		}
 	%>
 	<div id="wrapper">

@@ -1,8 +1,6 @@
-<%@ page
-		language="java" contentType="text/html; charset=UTF-8"
-		pageEncoding="UTF-8"
-%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+		 pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,27 +8,20 @@
 </head>
 <body>
 	<%
-		// Verify a user logged in
 		if (session == null) {
 			System.out.println("index.jsp: USER NULL");
-			response.sendRedirect("UsersList.jsp");
+			response.sendRedirect("UsersList.jsp");                // No user session established, reroute to login page
 		}
 	%>
+	<div>
+		<h1>All Breeders</h1>
+		<h2>
+			<a href="new">Add New User</a>
+			&nbsp;&nbsp;&nbsp;
+			<a href="list">List All User</a>
+		</h2>
+	</div>
 	<div id="wrapper">
-		<header align="center">
-			<span color="#000033">All Breeders</span>
-		</header>
-		<nav>
-			<ul>
-				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UpdateUsersForm.jsp">Edit My Info</a></li>
-				<li><a href="BeginPostAnimalProcess">Put an Animal Up for Adoption</a></li>
-				<li><a href="ListAnimals">All Animals</a></li>
-				<li><a href="ListBreeders">All Breeders</a></li>
-				<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
-			</ul>
-		</nav>
-		
 		<table border="1" cellpadding="5">
 			<caption><h2>List of Current Users</h2></caption>
 			<tr>

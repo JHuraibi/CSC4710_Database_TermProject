@@ -28,9 +28,7 @@ public class ReviewDAO extends HttpServlet {
 	private ResultSet resultSet = null;
 	
 
-	public ReviewDAO() {
-		System.out.println("ReviewDAO: INITIALIZED");
-	}
+	public ReviewDAO() {}
 
     protected void connect_func() throws SQLException {
         if (connect == null || connect.isClosed()) {

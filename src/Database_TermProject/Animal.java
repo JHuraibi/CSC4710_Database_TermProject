@@ -19,7 +19,7 @@ public class Animal {
 	protected int adoptionPrice;
 	protected String ownersUsername;
 	protected ArrayList<String> animalsTraits;
-	public String[] traitsList = {"ONE","TWO","THREE"};
+	public String[] traitsList;
 
 	public String[] testStringArr = {"ONE","TWO","THREE"};
 	public String testString = "Trait1 Trait2 Trait3";
@@ -46,8 +46,6 @@ public class Animal {
 		animalsTraits = null;
 	}
 
-	// CHECK: Can traits stay in one long string? And only parse for searching by trait
-
 	// Used when traits need to be loaded (See: AnimalDAO.listAllAnimals())
 	public Animal(int animalID, String name, String species, String birthDate,
                   int adoptionPrice, String ownerUsername, ArrayList<String> traits){
@@ -62,8 +60,6 @@ public class Animal {
 		// Back to String[] for the time being. Traits will have first letter uppercase
 		this.convertBackToStringArr();
 	}
-
-	// !! !! CRITICAL: Research JavaBeans and why we need getters
 
 	public void setID(int animalID) { this.animalID = animalID; }
 	public void setName(String name) { this.name = name; }
@@ -82,7 +78,6 @@ public class Animal {
 
 
 	// IF TIME: Give variables below better names
-	// IF TIME: Traits are printing
     private void convertBackToStringArr(){
 
 		String[] traitsForOutput;

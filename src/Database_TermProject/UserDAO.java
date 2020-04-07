@@ -26,14 +26,12 @@ import java.util.List;
 @WebServlet("/UserDAO")
 public class UserDAO extends HttpServlet {
     //	private static final long serialVersionUID = 1L;
-    private Connection 			connect = null;
-    private Statement 			statement = null;
-    private PreparedStatement 	preparedStatement = null;
-    private ResultSet 			resultSet = null;
+    private Connection connect = null;
+    private Statement statement = null;
+    private PreparedStatement preparedStatement = null;
+    private ResultSet resultSet = null;
 
-    public UserDAO() {
-		System.out.println("UserDAO: INITIALIZED");
-	}
+    public UserDAO() {}
 
     protected void connect_func() throws SQLException {
         if (connect == null || connect.isClosed()) {
@@ -51,10 +49,10 @@ public class UserDAO extends HttpServlet {
 
 
     private void closeAndDisconnectAll() throws SQLException {
-        if (resultSet != null) 			resultSet.close();
-        if (statement != null) 			statement.close();
-        if (preparedStatement != null) 	preparedStatement.close();
-        if (connect != null) 			connect.close();
+        if (resultSet != null) resultSet.close();
+        if (statement != null) statement.close();
+        if (preparedStatement != null) preparedStatement.close();
+        if (connect != null) connect.close();
     }
 
 
@@ -73,25 +71,25 @@ public class UserDAO extends HttpServlet {
         SQL_dropTable = "DROP TABLE IF EXISTS users";
 
         SQL_createTable = "CREATE TABLE IF NOT EXISTS users(" +
-                			"username varchar(30) NOT NULL," +
-                			"password varchar(24) NOT NULL," +
-                			"firstName varchar(50) DEFAULT 'Anonymous'," +
-                			"lastName varchar(50)," +
-                			"email varchar(60) NOT NULL," +
-                			"PRIMARY KEY (username)," +
-                			"UNIQUE KEY (username) );";
+                "username varchar(30) NOT NULL," +
+                "password varchar(24) NOT NULL," +
+                "firstName varchar(50) DEFAULT 'Anonymous'," +
+                "lastName varchar(50)," +
+                "email varchar(60) NOT NULL," +
+                "PRIMARY KEY (username)," +
+                "UNIQUE KEY (username) );";
 
         SQL_populateTable = "INSERT INTO users (username, password, firstName, lastName, email) values " +
-                				"('user_0', 'pass_0', 'FName0', 'LName0', '0@email.com'), " +
-                				"('user_1', 'pass_1', 'FName1', 'LName1', '1@email.com'), " +
-                				"('user_2', 'pass_2', 'FName2', 'LName2', '2@email.com'), " +
-                				"('user_3', 'pass_3', 'FName3', 'LName3', '3@email.com'), " +
-                				"('user_4', 'pass_4', 'FName4', 'LName4', '4@email.com'), " +
-                				"('user_5', 'pass_5', 'FName5', 'LName5', '5@email.com'), " +
-                				"('user_6', 'pass_6', 'FName6', 'LName6', '6@email.com'), " +
-                				"('user_7', 'pass_7', 'FName7', 'LName7', '7@email.com'), " +
-                				"('user_8', 'pass_8', 'FName8', 'LName8', '8@email.com'), " +
-                				"('user_9', 'pass_9', 'FName9', 'LName9', '9@email.com');";
+                "('user_0', 'pass_0', 'FName0', 'LName0', '0@email.com'), " +
+                "('user_1', 'pass_1', 'FName1', 'LName1', '1@email.com'), " +
+                "('user_2', 'pass_2', 'FName2', 'LName2', '2@email.com'), " +
+                "('user_3', 'pass_3', 'FName3', 'LName3', '3@email.com'), " +
+                "('user_4', 'pass_4', 'FName4', 'LName4', '4@email.com'), " +
+                "('user_5', 'pass_5', 'FName5', 'LName5', '5@email.com'), " +
+                "('user_6', 'pass_6', 'FName6', 'LName6', '6@email.com'), " +
+                "('user_7', 'pass_7', 'FName7', 'LName7', '7@email.com'), " +
+                "('user_8', 'pass_8', 'FName8', 'LName8', '8@email.com'), " +
+                "('user_9', 'pass_9', 'FName9', 'LName9', '9@email.com');";
 
         connect_func();                                                         // Ensure active connection
         statement = connect.createStatement();
@@ -103,8 +101,8 @@ public class UserDAO extends HttpServlet {
 
         statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
 
-        closeAndDisconnectAll();                                                // Terminate any open connections
         System.out.println("Users Table: INITIALIZED");
+        closeAndDisconnectAll();                                                // Terminate any open connections
     }
 
 

@@ -33,9 +33,7 @@ public class FavBreederDAO extends HttpServlet {
 	private ResultSet resultSet = null;
 
 
-	public FavBreederDAO() {
-		System.out.println("FavBreederDAO: INITIALIZED");
-	}
+	public FavBreederDAO() {}
 
     protected void connect_func() throws SQLException {
         if (connect == null || connect.isClosed()) {

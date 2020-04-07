@@ -29,9 +29,7 @@ public class TraitDAO {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    TraitDAO() {
-		System.out.println("TraitDAO: INITIALIZED");
-	}
+    TraitDAO() {}
 
     protected void connect_func() throws SQLException {
         if (connect == null || connect.isClosed()) {
@@ -77,36 +75,22 @@ public class TraitDAO {
 
         statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
 
+		// Add traits for initial animals
         // See: Notes
-        addTraitsToTable("happy drooly hyper", 2);                              // Add traits for initial animals
-        addTraitsToTable("rude", 3);
-        addTraitsToTable("calm scratchy soft", 4);
-        addTraitsToTable("happy drooly hyper", 5);
-        addTraitsToTable("happy drooly hyper", 6);
-        addTraitsToTable("happy drooly hyper", 7);
-        addTraitsToTable("dramatic", 8);
-        addTraitsToTable("happy drooly hyper", 9);
-        addTraitsToTable("happy drooly hyper", 10);
+        addTraitsToTable("silly neurotic weird-eyeballs energetic house-broken", 1);
+        addTraitsToTable("wiggly happy slobbery playful barky", 2);
+        addTraitsToTable("outdoor sleepy crabby snuggly mysterious", 3);
+        addTraitsToTable("enjoyable silly progressive creative goofy", 4);
+        addTraitsToTable("dry scaley nocturnal pineconey cuddly", 5);
+        addTraitsToTable("large stanky lazy round sleepy", 6);
+        addTraitsToTable("xxxlarge soggy loud spontaneous slimey", 7);
+        addTraitsToTable("superfast animated dare-ing melancholy blur-y", 8);
+        addTraitsToTable("extra-stanky boring noisy lazy smelly", 9);
+        addTraitsToTable("slow slimey boring gasy scaley", 10);
 
         closeAndDisconnectAll();
-        System.out.println("Traits Table: INITIALIZED");
-    }
 
-    /*
-    // Extra Function for TESTING
-    public void addInitial() throws SQLException {
-        System.out.println("ADDING TRAITS");
-        // See: Notes
-        addTraitsToTable("happy drooly hyper", 2);                              // Add traits for initial animals
-        addTraitsToTable("rude", 3);
-        addTraitsToTable("calm scratchy soft", 4);
-        addTraitsToTable("happy drooly hyper", 5);
-        addTraitsToTable("happy drooly hyper", 6);
-        addTraitsToTable("happy drooly hyper", 7);
-        addTraitsToTable("dramatic", 8);
-        addTraitsToTable("happy drooly hyper", 9);
-        addTraitsToTable("happy drooly hyper", 10);
-    }*/
+    }
 
 
     public void addTraitsToTable(String traitRawData, int newAnimalID) throws SQLException {
@@ -142,6 +126,7 @@ public class TraitDAO {
 
 
     // !! TODO: Fix name
+	// CHANGE TO STRING[] LATER
     public ArrayList<String> getAnimalsTraits(int animalID) throws SQLException {
 
         ArrayList<String> animalsTraits = new ArrayList<>();

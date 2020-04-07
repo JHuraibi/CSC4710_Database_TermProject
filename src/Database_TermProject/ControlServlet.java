@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 // [Project-Wide Notes]                                                                                 //
 //      - Tables with foreign keys need to be declared AFTER the table they reference                   //
 //      - The password for our Default Root user was changed to differentiate between:                  //
-//          [Root: InitializeDB.jsp] AND [Root: Local MySQL Instance Admin, Workbench]                  //
+//          [Root: INITIALIZEDB.jsp] AND [Root: Local MySQL Instance Admin, Workbench]                  //
 //      - Attributes defined as "NOT NULL" are critical to functionality (e.g. password in User table)  //
 //      - Attributes that are dependent on an Animal existing will be auto-deleted once said animal     //
 //          is removed (either deleted or adopted). These attributes can be identified in their         //
@@ -35,9 +35,6 @@ import javax.servlet.http.HttpSession;
 //          different ways dependent on where they're used. In servlets (e.g. ControlServlet.java)      //
 //          they must be EXPLICITLY declared before use. In JSP's, they DO NOT NEED to be declared      //
 //          and can be accessed just by referencing them like any other object.                         //
-//	 !!	- JavaBeans: To access an object's data fields, the field needs a corresponding					//
-//			getter with a name that exactly matches the case-level of the field's name. Failure			//
-//			to do so will produce a "Property [X] is not found on type [Y]" error						//
 //                                                                                                      //
 //------------------------------------------------------------------------------------------------------//
 //                                                                                                      //
@@ -396,11 +393,8 @@ public class ControlServlet extends HttpServlet {
         adoptionPrice = Integer.parseInt(request.getParameter("adoptionPrice"));
         traitsRawData = request.getParameter("traits");
         ownersUsername = (String) session.getAttribute("sUsername");            // "Owner" is simply the current user
-
+                                                                                // (↓ Below): Build the temp Animal object to add
         newAnimal = new Animal(name, species, birthDate, adoptionPrice, ownersUsername);
-                                                                                // (↑ Above): Build the temp Animal object to add
-
-        // !! CRITICAL See: Notes about adding Traits
         animalDAO.insert(newAnimal, traitsRawData);                             // Add the new animal to the Animals table
 
         response.sendRedirect("index.jsp");                                     // Return to home page
@@ -416,15 +410,14 @@ public class ControlServlet extends HttpServlet {
 
     protected void listAllAnimals(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        System.out.println("LISTING ALL ANIMALS - START");
+
         List<Animal> listAnimals;
-        String testString = "TESTING";
 
         listAnimals = animalDAO.listAllAnimals();                               // Build the list of animals
 
-        request.setAttribute("listAnimals", listAnimals);                       // !! CRITICAL: Make sure we can put the "setAttribute" here
-        request.setAttribute("traits", testString);                       // !! CRITICAL: Make sure we can put the "setAttribute" here
-        dispatcher = request.getRequestDispatcher("AdoptionList.jsp");
+        request.setAttribute("listAnimals", listAnimals);						// Attach the List to a new session attribute
+
+		dispatcher = request.getRequestDispatcher("AdoptionList.jsp");
         dispatcher.forward(request, response);
     }
 
