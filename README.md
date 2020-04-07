@@ -1,8 +1,7 @@
 # CSC4710_TermProject
 Partner: B. Nurmi
 
-This repo is simply to have a copy of our project repo on my own github page.
-Actual contents of files will be kept identical to partner's repo, however repo structuring will be different.
+Repo contents divergent from partner's until format finalized.
 
-WAR file not up to date  
-Last updated April 4, 2020 01:30
+Possible project folder/file corruption, attempted fix applied seemingly minimal data loss.
+Last updated 20:57 April 6, 2020
