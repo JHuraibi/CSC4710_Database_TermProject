@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +11,7 @@
 	</style>
 </head>
 <body>
-	<div id="initialize">
+	<div>
 		<form action="InitializeDB" method="post">
 			<input type="submit" value="Initialize Database"/>
 		</form>

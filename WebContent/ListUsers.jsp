@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -20,14 +19,13 @@
 		<nav>
 			<ul>
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UsersForm.jsp">Edit User Information</a></li>
+				<li><a href="UpdateUsersForm.jsp">Edit My Info</a></li>
 				<li><a href="BeginPostAnimalProcess">Put an Animal Up for Adoption</a></li>
 				<li><a href="ListAnimals">All Animals</a></li>
 				<li><a href="ListBreeders">All Breeders</a></li>
 				<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
 			</ul>
 		</nav>
-		
 		<table border="1" width="70%" align="center">
 			<!-- Output set table headers -->
 			<tr>
@@ -39,7 +37,7 @@
 			</tr>
 			
 			<!-- Output the info for each user in the array -->
-			<c:forEach items="${listUsers}" var="users">
+			<c:forEach var="users" items="${listUsers}">
 				<tr>
 					<td>${users.username }</td>
 					<td>${users.password }</td>

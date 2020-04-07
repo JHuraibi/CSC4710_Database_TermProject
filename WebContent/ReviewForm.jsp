@@ -1,15 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-	<title>Add Animal</title>
+	<title>Review an Animal</title>
 </head>
 <body>
 	<%
+		// Verify a user logged in
 		if (session == null) {
 			System.out.println("ReviewForm.jsp: USER NULL");
-			response.sendRedirect("login.jsp");                // No user session established, reroute to login page
+			response.sendRedirect("login.jsp");
 		}
 	%>
 	<div id="wrapper">
@@ -19,8 +19,11 @@
 		<nav>
 			<ul>
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UsersForm.jsp">Edit User Information</a></li>
-				<li><a href="UserAccount.jsp">My Account</a></li>
+				<li><a href="UpdateUsersForm.jsp">Edit My Info</a></li>
+				<li><a href="BeginPostAnimalProcess">Put an Animal Up for Adoption</a></li>
+				<li><a href="ListAnimals">All Animals</a></li>
+				<li><a href="ListBreeders">All Breeders</a></li>
+				<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
 			</ul>
 		</nav>
 		<form action="SubmitReview" method="post">
@@ -47,6 +50,9 @@
 						<!-- Max-length matches [ comments varchar(140) ] attribute in table [ Reviews ] -->
 						<textarea id="comment" name="comment" cols="35" rows="4" maxlength="140" wrap="soft"></textarea>
 					</td>
+				</tr>
+				<tr>
+					<input type="hidden" name="animalID" value="<%=request.getParameter("animalID")%>"/>
 				</tr>
 				<tr>
 					<td colspan="2">

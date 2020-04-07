@@ -47,7 +47,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JSP&#10;JAVA" />
     <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Database2020" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -196,7 +196,6 @@
       <workItem from="1586023208445" duration="22439000" />
       <workItem from="1586050076818" duration="1357000" />
       <workItem from="1586111362983" duration="35000" />
-      <workItem from="1586219242264" duration="288000" />
     </task>
     <servers />
   </component>
@@ -276,14 +275,14 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="460" y="575" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1584742247080" />
-    <state x="222" y="70" width="1933" height="1207" key="DiffContextDialog" timestamp="1586219677851">
+    <state x="93" y="100" width="1094" height="1207" maximized="true" key="DiffContextDialog" timestamp="1586218882981">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="222" y="70" width="1933" height="1207" key="DiffContextDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586219677851" />
-    <state x="420" y="459" key="FileChooserDialogImpl" timestamp="1586219017373">
+    <state x="93" y="100" width="1094" height="1207" maximized="true" key="DiffContextDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586218882981" />
+    <state x="420" y="459" key="FileChooserDialogImpl" timestamp="1586050834230">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="420" y="459" key="FileChooserDialogImpl/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586219017373" />
+    <state x="420" y="459" key="FileChooserDialogImpl/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586050834230" />
     <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1585788120840">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -322,20 +321,20 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1138" y="422" key="com.intellij.database.view.ui.DbObjectDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1585786530154" />
-    <state x="292" y="100" width="1454" height="1207" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1586219677851">
+    <state x="292" y="100" width="1454" height="1207" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1586218805577">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="292" y="100" width="1454" height="1207" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586219677851" />
-    <state x="89" y="118" width="2272" height="1207" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1586219529967">
+    <state x="292" y="100" width="1454" height="1207" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586218805577" />
+    <state x="89" y="118" width="2272" height="1207" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1586041947281">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="89" y="118" width="2272" height="1207" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586219529967" />
-    <state x="976" y="525" key="com.intellij.ide.util.TipDialog" timestamp="1586219242497">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="89" y="118" width="2272" height="1207" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586041947281" />
+    <state x="732" y="390" key="com.intellij.ide.util.TipDialog" timestamp="1586111365612">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="732" y="390" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586111365612" />
     <state x="-650" y="615" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/-1050.0.1050.1640@-1050.0.1050.1640" timestamp="1585628568128" />
-    <state x="976" y="525" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586219242497" />
+    <state x="976" y="525" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586050077809" />
     <state x="816" y="566" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1585971435536">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

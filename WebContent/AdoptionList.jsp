@@ -1,6 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%------------------------------------------------------------------------------------------------------//
+//	Notes:																								//
+//	 	!!	- JavaBeans: To access an object's data fields, the field needs a corresponding				//
+//				getter with the same case-level to match the field (lower- vs upper-case). Failure		//
+//				to do so will produce a "Property [X] is not found on object							//
+//				e.g.																					//
+//					[ FILE: Animal.java ]																//
+//					int animalID [and] getanimalID() → CORRECT											//
+//					int animalID [and] getAnimalID() → INCORRECT										//
+//																										//
+//	 		- Variables used within this file:															//
+//				listAnimals: ArrayList<Animal> from AnimalDAO.listAllAnimals()							//
+//				animal: local object reference															//
+//			- JSTL foreach similar to java foreach: "for (Animal animal : listAnimal)"					//
+//																										//
+//------------------------------------------------------------------------------------------------------%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,20 +24,22 @@
 	<title>Available Adoptions</title>
 </head>
 <body>
-		<%
-			if (session == null) {
-				System.out.println("index.jsp: USER NULL");
-				response.sendRedirect("AdoptionList.jsp");                // No user session established, reroute to login page
-			}
-		%>
+	<%
+		// Verify a user logged in
+		if (session == null) {
+			System.out.println("index.jsp: USER NULL");
+			response.sendRedirect("AdoptionList.jsp");
+		}
+	%>
 	<div id="wrapper">
 		<header>
 			<h1>List of All Animals Available for Adoption</h1>
 		</header>
+		
 		<nav>
 			<ul>
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UpdateUsersForm.jsp">Edit User Information</a></li>
+				<li><a href="UpdateUsersForm.jsp">Edit My Info</a></li>
 				<li><a href="index.jsp">My Account</a></li>
 			</ul>
 		</nav>
@@ -32,8 +50,8 @@
 				<tr>
 					<th>Name</th>
 					<th>Species</th>
-					<th>Posted By</th>
-					<th>Price</th>
+					<th>Owner</th>
+					<th>Price to Adopt</th>
 					<th>Traits</th>
 					<th></th>
 				</tr>
@@ -42,11 +60,14 @@
 						<td><c:out value="${animal.name}"/></td>
 						<td><c:out value="${animal.species}"/></td>
 						<td><c:out value="${animal.ownerUsername}"/></td>
-						<td><c:out value="${animal.adoptionPrice}"/></td>    <!-- TODO: Add output for traits -->
-						<td>[ADD TRAITS OUTPUT METHOD]</td>
+						<td>$<c:out value="${animal.adoptionPrice}"/></td>
 						<td>
-							<!-- ID retrieval failing without .getID() -->
-							<a href="ReviewForm.jsp?animalID=${animal.getID()}"/>
+							<c:forEach var="trait" items="${animal.traitsList}">
+								<c:out value="${trait}"/>
+							</c:forEach>
+						</td>
+						<td>
+							<a href="ReviewForm.jsp?animalID=${animal.animalID}" id="review"/>
 							Review this animal
 							</a>
 						</td>
@@ -70,11 +91,6 @@
 		text-align: left;
 	}
 	
-	.resort {
-		font-size: 1.2em;
-		color: #000033;
-	}
-	
 	/*--| id Selectors |--*/
 	#wrapper {
 		background-color: #90c7e3;
@@ -84,6 +100,12 @@
 		margin-left: auto;
 		margin-right: auto;
 		width: 80%;
+	}
+	
+	#review {
+		color: crimson;
+		margin: auto;
+		text-decoration: none;
 	}
 	
 	/*--| Element Selectors |--*/

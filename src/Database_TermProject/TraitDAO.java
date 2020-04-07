@@ -29,7 +29,9 @@ public class TraitDAO {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    TraitDAO() {}
+    TraitDAO() {
+		System.out.println("TraitDAO: INITIALIZED");
+	}
 
     protected void connect_func() throws SQLException {
         if (connect == null || connect.isClosed()) {
@@ -87,7 +89,7 @@ public class TraitDAO {
         addTraitsToTable("happy drooly hyper", 10);
 
         closeAndDisconnectAll();
-        System.out.println("Traits Table: Initialized");
+        System.out.println("Traits Table: INITIALIZED");
     }
 
     /*

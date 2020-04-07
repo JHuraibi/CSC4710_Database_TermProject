@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page
+		language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"
+%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,25 +10,31 @@
 </head>
 <body>
 	<%
+		// Verify a user logged in
 		if (session == null) {
 			System.out.println("index.jsp: USER NULL");
-			response.sendRedirect("UserAccount.jsp");                // No user session established, reroute to login page
+			response.sendRedirect("UserAccount.jsp");
 		}
 	%>
 	<div id="wrapper">
 		<header>
 			<h1>My Account</h1>
 		</header>
-		<c:if test="${session == null}">
-			response.sendRedirect("login.jsp");
-		</c:if>
+		<nav>
+			<ul>
+				<li><a href="index.jsp">Home</a></li>
+				<li><a href="UpdateUsersForm.jsp">Edit My Info</a></li>
+				<li><a href="BeginPostAnimalProcess">Put an Animal Up for Adoption</a></li>
+				<li><a href="ListAnimals">All Animals</a></li>
+				<li><a href="ListBreeders">All Breeders</a></li>
+				<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
+			</ul>
+		</nav>
 		<table border="1" cellpadding="5">
 			<caption><h2>Current User Information</h2></caption>
 			<tr>
 				<th>Username</th>
-				<c:if test="${sessionScope.sUsername == root}"> <!-- Hide password info unless root -->
-					<th>Password</th>
-				</c:if>
+				<th>Password</th>
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Email</th>

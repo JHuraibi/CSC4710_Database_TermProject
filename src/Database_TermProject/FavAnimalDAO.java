@@ -34,6 +34,7 @@ public class FavAnimalDAO extends HttpServlet {
     private ResultSet resultSet = null;
 
     public FavAnimalDAO() {
+		System.out.println("FavAnimalDAO: INITIALIZED");
     }
 
     protected void connect_func() throws SQLException {
@@ -57,10 +58,10 @@ public class FavAnimalDAO extends HttpServlet {
 
 
     private void closeAndDisconnectAll() throws SQLException {
-        if (resultSet != null) resultSet.close();
-        if (statement != null) statement.close();
-        if (preparedStatement != null) preparedStatement.close();
-        if (connect != null) connect.close();
+        if (resultSet != null) 			resultSet.close();
+        if (statement != null) 			statement.close();
+        if (preparedStatement != null) 	preparedStatement.close();
+        if (connect != null) 			connect.close();
     }
 
 
@@ -88,7 +89,7 @@ public class FavAnimalDAO extends HttpServlet {
         statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
 
         closeAndDisconnectAll();
-        System.out.println("FavAnimals Table: Initialized");
+        System.out.println("FavAnimals Table: INITIALIZED");
     }
 
 

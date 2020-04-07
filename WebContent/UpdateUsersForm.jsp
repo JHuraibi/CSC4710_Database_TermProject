@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!--------------------------------------->
-<!-- FORMERLY: UserForm.jsp -->
-<!-- Added 's' to match UsersList.jsp -->
-<!--------------------------------------->
+
+<%------------------------------------------%>
+<%--|	  FORMERLY: UserForm.jsp         |--%>
+<%--|  Split into New and Update Forms   |--%>
+<%------------------------------------------%>
 
 <html>
 <head>
@@ -12,11 +12,19 @@
 </head>
 <body>
 	<div>
-		<!-- TODO: Edit page title according to User existence -->
 		<header>
 			<h1>Edit Your Account Information</h1>
 		</header>
 	</div>
+	<nav>
+		<ul>
+			<li><a href="index.jsp">Home</a></li>
+			<li><a href="BeginPostAnimalProcess">Put an Animal Up for Adoption</a></li>
+			<li><a href="ListAnimals">All Animals</a></li>
+			<li><a href="ListBreeders">All Breeders</a></li>
+			<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
+		</ul>
+	</nav>
 	<!-- IF TIME: Implement method to block root user from editing their own info from within website-->
 	<div id="wrapper">
 		<form action="UpdateUser" method="post">

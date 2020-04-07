@@ -1,6 +1,7 @@
 package Database_TermProject;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -25,13 +26,15 @@ import java.util.List;
 
 @WebServlet("/AnimalDAO")
 public class AnimalDAO extends HttpServlet {
-//	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;		// OHHHH THIS IS FOR Serializable
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 
-	public AnimalDAO() {}
+	public AnimalDAO() {
+		System.out.println("AnimalDAO: INITIALIZED");
+	}
 
     protected void connect_func() throws SQLException {
         if (connect == null || connect.isClosed()) {
@@ -92,7 +95,7 @@ public class AnimalDAO extends HttpServlet {
                                             "('Animal_5', 'Pangolin',     '2019/5/01',    50, 'user_1'  ), "+
                                             "('Animal_6', 'Hippopotamus', '2019/6/01', 10000, 'user_2'  ), "+
                                             "('Animal_7', 'Whale',        '2009/7/01', 99999, 'user_2'  ), "+
-                                            "('Animal_8', 'Gorillaz',     '2019/8/01',    80, 'user_2'  ), "+
+                                            "('Animal_8', 'Gorillaz',     '2000/1/9',  19200, 'user_2'  ), "+
                                             "('Animal_9', 'Ox',           '2020/9/01',    90, 'user_9'  ), "+
                                             "('Animal_10','Tortoise',     '1980-01-01',  100, 'user_10' )  ;" ;
 
@@ -108,7 +111,7 @@ public class AnimalDAO extends HttpServlet {
         //initializeAnimals();
 
         closeAndDisconnectAll();
-        System.out.println("Animals Table: Initialized");
+        System.out.println("Animals Table: INITIALIZED");
 	}
 
 
@@ -116,7 +119,7 @@ public class AnimalDAO extends HttpServlet {
 
         String SQL_allAnimals;
         List<Animal> listAnimals;
-        ArrayList<String> traits;
+        ArrayList<String> listTraits;
         Animal tempAnimal;
         TraitDAO traitAccessor;
 
@@ -138,9 +141,9 @@ public class AnimalDAO extends HttpServlet {
 			int adoptionPrice = resultSet.getInt("adoptionPrice");
 			String ownerUsername = resultSet.getString("ownerUsername");
 
-			traits = traitAccessor.getAnimalsTraits(animalID);                      // Get all the traits for this animal
-            System.out.println("ID: " + animalID);
-            tempAnimal = new Animal(animalID, name, species, birthDate, adoptionPrice, ownerUsername, traits);
+			listTraits = traitAccessor.getAnimalsTraits(animalID);              // Get all the traits for this animal
+
+            tempAnimal = new Animal(animalID, name, species, birthDate, adoptionPrice, ownerUsername, listTraits);
 			listAnimals.add(tempAnimal);
 		}
 
@@ -241,7 +244,7 @@ public class AnimalDAO extends HttpServlet {
 		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_getAnimal);
 		preparedStatement.setInt(1, animalID);
 		resultSet = preparedStatement.executeQuery();
-		
+
 		if (resultSet.next())
 		{
 			String name = resultSet.getString("name");
@@ -256,6 +259,8 @@ public class AnimalDAO extends HttpServlet {
         closeAndDisconnectAll();
 		return tempAnimal;
 	}
+
+
 
 
 	// !! This method should ultimately be replaced

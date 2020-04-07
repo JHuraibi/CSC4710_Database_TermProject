@@ -31,6 +31,14 @@ import javax.servlet.http.HttpSession;
 //          those objects needs to be carried out before closeAndDisconnectAll() is called.             //
 //          A good example of this is UserDAO.validateUser().                                           //
 //                                                                                                      //
+//   !! - The Built-in Objects (e.g. session, response, request, out) are accessed in TWO very          //
+//          different ways dependent on where they're used. In servlets (e.g. ControlServlet.java)      //
+//          they must be EXPLICITLY declared before use. In JSP's, they DO NOT NEED to be declared      //
+//          and can be accessed just by referencing them like any other object.                         //
+//	 !!	- JavaBeans: To access an object's data fields, the field needs a corresponding					//
+//			getter with a name that exactly matches the case-level of the field's name. Failure			//
+//			to do so will produce a "Property [X] is not found on type [Y]" error						//
+//                                                                                                      //
 //------------------------------------------------------------------------------------------------------//
 //                                                                                                      //
 //      [Rough Format of ControlServlet Methods]                                                        //
@@ -235,7 +243,7 @@ public class ControlServlet extends HttpServlet {
             response.sendRedirect("index.jsp");                                 // Route to website homepage
         }
         else {
-            response.sendRedirect("Login.jsp");                                 // Re-Route *back* to login page
+            response.sendRedirect("Login.jsp");                                 // Re-Route *back* to login page on failure
         }
     }
 
@@ -362,6 +370,7 @@ public class ControlServlet extends HttpServlet {
 
         if (userReachedMaxPosts) {                                              // Query the Animals table (See: UserDAO.java)
             // IF TIME: Prompt to let user know max reached
+
             response.sendRedirect("index.jsp");                                 // Maxed out, route back to homepage
         }
         else {
@@ -409,15 +418,13 @@ public class ControlServlet extends HttpServlet {
             throws SQLException, IOException, ServletException {
         System.out.println("LISTING ALL ANIMALS - START");
         List<Animal> listAnimals;
+        String testString = "TESTING";
 
         listAnimals = animalDAO.listAllAnimals();                               // Build the list of animals
 
-        dispatcher = request.getRequestDispatcher("AdoptionList.jsp");
-        System.out.println("TEST VALUE:" + listAnimals.get(0).animalID);
-
-
         request.setAttribute("listAnimals", listAnimals);                       // !! CRITICAL: Make sure we can put the "setAttribute" here
-
+        request.setAttribute("traits", testString);                       // !! CRITICAL: Make sure we can put the "setAttribute" here
+        dispatcher = request.getRequestDispatcher("AdoptionList.jsp");
         dispatcher.forward(request, response);
     }
 

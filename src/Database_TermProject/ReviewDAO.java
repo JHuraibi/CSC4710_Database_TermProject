@@ -28,7 +28,9 @@ public class ReviewDAO extends HttpServlet {
 	private ResultSet resultSet = null;
 	
 
-	public ReviewDAO() {}
+	public ReviewDAO() {
+		System.out.println("ReviewDAO: INITIALIZED");
+	}
 
     protected void connect_func() throws SQLException {
         if (connect == null || connect.isClosed()) {
@@ -85,7 +87,7 @@ public class ReviewDAO extends HttpServlet {
         statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
 
         closeAndDisconnectAll();
-        System.out.println("Reviews Table: Initialized");
+        System.out.println("Reviews Table: INITIALIZED");
 	}
 
 	

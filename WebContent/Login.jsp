@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,9 +20,6 @@
 				<input name="password" id="password" type="password" required>
 				<br>
 				<input type="submit" value="Login" align="middle">
-				<c:if test="${loggedOut == true}">
-					<p>Logged Out Successfully</p>
-				</c:if>
 				<br><br><br>
 				<a href="NewUsersForm.jsp" style="font-size: small">
 					Don't have an Account? Click Here to Register.
@@ -58,7 +54,7 @@
 		font-family: Verdana, Arial, sans-serif;
 	}
 	
-	table {
+	form {
 		margin: auto;
 		border: 1px solid #3399cc;
 		width: 90%;

@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8" %>
-<%@ page import="java.sql.*" %>
+<%@ page
+		language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"
+%>
+<%@ page import="java.sql.*"%>
 
 <!------------------------------------------------->
 <!-- !! !! FORMERLY: DynamicDropSearch.jsp !! !! -->
@@ -13,6 +15,16 @@
 	<title>Search by Trait</title>
 </head>
 <body>
+	<nav>
+		<ul>
+			<li><a href="index.jsp">Home</a></li>
+			<li><a href="UpdateUsersForm.jsp">Edit My Info</a></li>
+			<li><a href="BeginPostAnimalProcess">Put an Animal Up for Adoption</a></li>
+			<li><a href="ListAnimals">All Animals</a></li>
+			<li><a href="ListBreeders">All Breeders</a></li>
+			<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
+		</ul>
+	</nav>
 	<h1>Search For Adoptable Animals</h1>
 	<p>Please select a trait to view all animals with the given trait</p>
 	
@@ -50,7 +62,8 @@
 						
 						// Use StringBuilder.toString() for final output (See below)
 				%>
-				<option value="<%=trait.toString() %>"><%=trait %></option>
+				<option value="<%=trait.toString() %>"><%=trait %>
+				</option>
 				<%
 					}
 					// END while loop
@@ -59,7 +72,8 @@
 			<input type="submit" value="Search">
 		</p>
 		<%
-			} catch (SQLException sqe) {
+			}
+			catch (SQLException sqe) {
 				out.println(sqe);
 			} // END [ try/catch ]
 		
