@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+	<meta charset="UTF-8">
+	<link href="http://localhost:8080/4710_TermProject/CSS/stylesheet.css" rel="stylesheet">
 	<title>Add Animal</title>
 </head>
 <body>
@@ -19,8 +21,8 @@
 		<nav>
 			<ul>
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UpdateUsersForm.jsp">Edit My Info</a></li>
-				<li><a href="BeginPostAnimalProcess">Put an Animal Up for Adoption</a></li>
+				<li><a href="UpdateUser">Edit My Info</a></li>
+				<li><a href="PostAnimal">Put an Animal Up for Adoption</a></li>
 				<li><a href="ListAnimals">All Animals</a></li>
 				<li><a href="ListBreeders">All Breeders</a></li>
 				<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
