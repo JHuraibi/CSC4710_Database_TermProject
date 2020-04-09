@@ -26,7 +26,7 @@ import java.util.List;
 
 @WebServlet("/AnimalDAO")
 public class AnimalDAO extends HttpServlet {
-//  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;		// Used w/ class Serializable
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
@@ -78,7 +78,7 @@ public class AnimalDAO extends HttpServlet {
                                     "adoptionPrice INTEGER DEFAULT 1, " +
                                     "ownerUsername varchar(30)," +
                                     "PRIMARY KEY (animalID)," +
-                                    "FOREIGN KEY (ownerUsername) REFERENCES Users (username) ON DELETE CASCADE ); ";
+                                    "FOREIGN KEY (ownerUsername) REFERENCES Users (username) ON DELETE CASCADE ON UPDATE CASCADE); ";
 
 		// IF TIME: Fill with better example names
 

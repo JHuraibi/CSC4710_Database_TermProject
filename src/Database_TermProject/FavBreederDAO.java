@@ -32,7 +32,6 @@ public class FavBreederDAO extends HttpServlet {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 
-
 	public FavBreederDAO() {}
 
     protected void connect_func() throws SQLException {
@@ -74,18 +73,19 @@ public class FavBreederDAO extends HttpServlet {
                                         "breederUsername varchar(30) NOT NULL," +
                                         "whoFavdBreeder varchar(30) NOT NULL," +
                                         "PRIMARY KEY (breederUsername, whoFavdBreeder)," +
-                                        "FOREIGN KEY (breederUsername) REFERENCES Users(username) ON DELETE CASCADE," + // Breeder
-                                        "FOREIGN KEY (whoFavdBreeder) REFERENCES Users(username) ON DELETE CASCADE); "; // Who fav'd the breeder
+                                        "FOREIGN KEY (breederUsername) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE," +
+                                        "FOREIGN KEY (whoFavdBreeder) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE ); ";
 
-		connect_func();											            // Ensure active connection
+		connect_func();											            	// Ensure active connection
 		statement =  (Statement) connect.createStatement();
-        statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");              // Disable foreign key constraints (req'd to drop tables w/ references)
+        statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");              	// Disable foreign key constraints (req'd to drop tables w/ references)
 
-        statement = connect.createStatement();                              // Create the statement
-        statement.executeUpdate(SQL_dropTable);         // Drop any preexisting FavBreeders table
-		statement.executeUpdate(SQL_tableFavBreeders);                      // Establish new FavBreeders table
+        statement = connect.createStatement();                              	// Create the statement
+        statement.executeUpdate(SQL_dropTable);        				 			// Drop any preexisting FavBreeders table
+		statement.executeUpdate(SQL_tableFavBreeders);                      	// Establish new FavBreeders table
 
-        statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");              // Re-enable foreign key constraints
+		
+        statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");              	// Re-enable foreign key constraints
 
         closeAndDisconnectAll();
         System.out.println("FavBreeders Table: INITIALIZED");
@@ -96,6 +96,7 @@ public class FavBreederDAO extends HttpServlet {
 
 	    List<User> listFavBreeders;
 		String SQL_getFavBreeders;
+		User breeder;
 
         listFavBreeders = new ArrayList<>();
         SQL_getFavBreeders = "SELECT * FROM favBreeders WHERE whoFavdBreeder = ?";
@@ -108,12 +109,12 @@ public class FavBreederDAO extends HttpServlet {
 		while (resultSet.next())
 		{
             String username = resultSet.getString("username");
-            String password = "";
+            String password = resultSet.getString("password");					// Conditionals in JSP will hide pass if needed
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
             String email = resultSet.getString("email");
 
-            User breeder = new User(username, password, firstName, lastName, email);        // Intermediate temp User obj
+            breeder = new User(username, password, firstName, lastName, email);        // Intermediate temp User obj
             listFavBreeders.add(breeder);
 		}
 

@@ -27,7 +27,7 @@ import java.util.List;
 
 @WebServlet("/FavAnimalDAO")
 public class FavAnimalDAO extends HttpServlet {
-//  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;		// Used w/ class Serializable
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
@@ -76,7 +76,7 @@ public class FavAnimalDAO extends HttpServlet {
                 "whoFavdAnimal varchar(30) NOT NULL, " +
                 "PRIMARY KEY (animalID, whoFavdAnimal)," +
                 "FOREIGN KEY (animalID) REFERENCES Animals(animalID) ON DELETE CASCADE," +
-                "FOREIGN KEY (whoFavdAnimal) REFERENCES Users(username) ON DELETE CASCADE); ";
+                "FOREIGN KEY (whoFavdAnimal) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE ); ";
 
         connect_func();                                                         // Ensure active connection
         statement = connect.createStatement();
@@ -90,6 +90,8 @@ public class FavAnimalDAO extends HttpServlet {
         closeAndDisconnectAll();
         System.out.println("FavAnimals Table: INITIALIZED");
     }
+
+
 
 
     public List<Animal> listAllFavAnimals(String whoFavdAnimal) throws SQLException {
@@ -123,7 +125,7 @@ public class FavAnimalDAO extends HttpServlet {
         return listFavAnimals;
     }
 
-    public boolean insert(int animalID, String ownerUsername) throws SQLException {
+    public boolean insert(int animalID, String usernameWhoFavd) throws SQLException {
 
         String SQL_insertAnimal;
         boolean rowInserted;
@@ -134,7 +136,7 @@ public class FavAnimalDAO extends HttpServlet {
 
         preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_insertAnimal);
         preparedStatement.setInt(1, animalID);
-        preparedStatement.setString(2, ownerUsername);
+        preparedStatement.setString(2, usernameWhoFavd);
         rowInserted = preparedStatement.executeUpdate() > 0;
 
         closeAndDisconnectAll();

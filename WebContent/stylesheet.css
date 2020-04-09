@@ -13,13 +13,11 @@
 
 /*--| id Selector |--*/
 #wrapper {
-	background-color: #484b7b;
-	box-shadow: 3px 3px 3px #333;
-	min-width: 700px;
-	max-width: 1024px;
+	box-shadow: 3px 3px 3px 3px #333;
+	min-height: 700px;
 	margin-left: auto;
 	margin-right: auto;
-	width: 80%;
+	box-sizing: border-box;
 }
 
 
@@ -29,16 +27,16 @@ header, nav, main, footer, aside {
 }
 
 body {
-	background-color: #ffffff;
-	color: #666666;
+	margin: 0;
 	font-family: Verdana, Arial, sans-serif;
 }
 
 header {
 	background-color: #ffffff;
-	background-image: url(paws_main.png);
+	background-image: url("./Images/two_paws.png");
+	background-size: contain;
 	background-position: bottom;
-	background-repeat: no-repeat;
+	background-repeat: repeat-x;
 	height: 120px;	/*Might have to make this the same px as image height*/
 	color: #3399cc;
 	text-align: right;
@@ -49,6 +47,10 @@ header {
 nav {
 	float: left;
 	width: 150px;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	background-color: #484b7b;
 }
 
 aside {
@@ -92,20 +94,21 @@ tr:nth-of-type(even) {
 	background-color: #f5fafc;
 }
 
-nav a {
-	text-decoration: none;
-	font-size: 1.2em;
+header a{
+	font-size: 0.8em;
 }
 
 nav ul {
 	margin-top: 20px;
+	padding: 10px;
+	font-size: 1.2em;
 	list-style-type: none;
 }
 
 nav a {
 	text-decoration: none;
 	color: #000033;
-	font-size: 1.2em;
+	font-size: 0.8em;
 }
 
 nav a:link {
@@ -128,7 +131,7 @@ h1 {
 	margin-top: 0;
 	font-size: 3em;
 	text-align: left;
-	text-shadow: 2px 2px 2px #000000;
+	text-shadow: 2px 2px 2px 2px #ffffff;
 }
 
 h2, h3, h4, h5 {

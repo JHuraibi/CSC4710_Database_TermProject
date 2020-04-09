@@ -24,7 +24,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link href="http://localhost:8080/4710_TermProject/CSS/stylesheet.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 	<title>Available Adoptions</title>
 </head>
 <body>

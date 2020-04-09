@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link href="http://localhost:8080/4710_TermProject/CSS/stylesheet.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 	<title>User Management Application</title>
 </head>
 <body>
@@ -22,11 +22,11 @@
 		<nav>
 			<ul>
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UpdateUser">Edit My Info</a></li>
 				<li><a href="PostAnimal">Put an Animal Up for Adoption</a></li>
 				<li><a href="ListAnimals">All Animals</a></li>
 				<li><a href="ListBreeders">All Breeders</a></li>
-				<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
+				<li><a href="UpdateUser">My Account</a></li>
+				<li><a href="LogoutUser">Log Out</a></li>
 			</ul>
 		</nav>
 		<table border="1" width="70%" align="center">
@@ -53,137 +53,3 @@
 	</div>
 </body>
 </html>
-
-<!-- CSS here for now 🙃 🙃 🙃 -->
-<style>
-	/*-- Class Selectors --*/
-	.text {
-		text-align: left;
-	}
-	
-	.resort {
-		font-size: 1.2em;
-		color: #000033;
-	}
-	
-	/*--| id Selectors |--*/
-	#wrapper {
-		background-color: #90c7e3;
-		box-shadow: 3px 3px 3px #333;
-		min-width: 700px;
-		max-width: 1024px;
-		margin-left: auto;
-		margin-right: auto;
-		width: 80%;
-	}
-	
-	
-	/*--| Element Selectors |--*/
-	
-	table {
-		margin: auto;
-		border: 1px solid #3399cc;
-		width: 90%;
-		border-collapse: collapse;
-	}
-	
-	td, th {
-		border: 1px solid #3399cc;
-		padding: 5px;
-	}
-	
-	td {
-		text-align: center;
-	}
-	
-	tr:nth-of-type(even) {
-		background-color: #f5fafc;
-	}
-	
-	
-	header, nav, main, footer {
-		display: block; /* Ensures compatibility with older browsers */
-	}
-	
-	header {
-		background-color: #000033;
-		color: #ffffff;
-		font-family: Verdana, Arial, sans-serif;
-	}
-	
-	body {
-		background-color: #ffffff;
-		color: #666666;
-		font-family: Verdana, Arial, sans-serif;
-	}
-	
-	nav {
-		font-weight: bold;
-		float: left;
-		width: 160px;
-		padding: 20px 5px 0 20px;
-	}
-	
-	nav a {
-		text-decoration: none;
-	}
-	
-	nav a:link {
-		color: #000033;
-	}
-	
-	nav a:visited {
-		color: #344873;
-	}
-	
-	nav a:hover {
-		color: #ffffff;
-	}
-	
-	nav ul {
-		list-style-type: none; /* Removes list markers */
-		margin: 0;
-		padding-left: 0;
-	}
-	
-	main {
-		padding: 1px 1px 20px 20px;
-		background-color: #ffffff;
-		margin-left: 170px;
-	}
-	
-	h1 {
-		background-position: right;
-		background-size: 100% 100%;
-		background-repeat: no-repeat;
-		color: #ffffff;
-		padding-left: 20px;
-		height: 72px;
-		line-height: 200%;
-		margin-bottom: 0;
-	}
-	
-	h2 {
-		color: #3399CC;
-		font-family: Verdana, Arial, sans-serif;
-	}
-	
-	h3 {
-		color: #000033;
-	}
-	
-	dt {
-		color: #000033;
-		font-weight: bold;
-	}
-	
-	footer {
-		font-size: 0.70em;
-		font-style: italic;
-		padding: 10px;
-		text-align: center;
-		background-color: #ffffff;
-		margin-left: 170px;
-	}
-
-</style>

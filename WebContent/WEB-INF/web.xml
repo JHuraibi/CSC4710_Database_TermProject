@@ -8,7 +8,7 @@
     <!-- Research web.xml and Fix where necessary -->
     <servlet>
         <servlet-name>ControlServlet</servlet-name>
-        <servlet-class>TermProject.ControlServlet</servlet-class>
+        <servlet-class>Database_TermProject.ControlServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

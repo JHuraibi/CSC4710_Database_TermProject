@@ -99,4 +99,4 @@ public class Animal {
 		traitsList = traitsForOutput;											// Save the formatted strings
     }
 
-}// END [ CLASS: Animal ]
+}// END CLASS [ Animal ]

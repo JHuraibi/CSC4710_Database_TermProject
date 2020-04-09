@@ -12,10 +12,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// !! CRITICAL: Update note below if the Reviews table ON CASCADE.. gets changed
 //------------------------------------------------------------------------------------------------------//
 // Notes:                                                                                               //
 //      - The longest "rating" (from the <select...> in ReviewForm.jsp) is "Cray-Cray" @ 9 chars long   //
 //      - Attribute "comments" size needs to match the maxlength set for <textarea> of ReviewForm.jsp   //
+//		- We mention in our Project-Wide notes that the Reviews table is a good example of the 			//
+//			ON DELETE CASCADE and ON UPDATE CASCADE. This is because our Reviews table is set so that	//
+//			when a user is deleted, the reviews they created remain. Only when the animal is 			//
+//			deleted (adopted) will the review in question be deleted as well.							//
 //                                                                                                      //
 //------------------------------------------------------------------------------------------------------//
 
@@ -71,8 +76,8 @@ public class ReviewDAO extends HttpServlet {
                                     "rating varchar(9)," +
                                     "comments varchar(140)," +
                                     "PRIMARY KEY (animalID)," +
-                                    "FOREIGN KEY (animalID) REFERENCES Animals(animalID)," +
-                                    "FOREIGN KEY (authorsUsername) REFERENCES Users(username) ); ";
+                                    "FOREIGN KEY (animalID) REFERENCES Animals(animalID) ON DELETE CASCADE ON UPDATE CASCADE," +
+                                    "FOREIGN KEY (authorsUsername) REFERENCES Users(username) ON UPDATE CASCADE ); ";
 
 		connect_func();											                // Ensure active connection
 		statement =  (Statement) connect.createStatement();

@@ -21,25 +21,20 @@
 		<nav>
 			<ul>
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UpdateUser">Edit My Info</a></li>
 				<li><a href="PostAnimal">Put an Animal Up for Adoption</a></li>
 				<li><a href="ListAnimals">All Animals</a></li>
 				<li><a href="ListBreeders">All Breeders</a></li>
 				<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
 				<li><a href="index.jsp">My Account</a></li>
+				<li><a href="LogoutUser">Log Out</a></li>
 			</ul>
 		</nav>
 		<main>
 		
 		</main>
 		<aside>
-			<h5>[ Empty area to add items if needed]</h5>
+			[ EMPTY AREA IF NEEDED ]
 		</aside>
-		<footer>
-			<form action="LogoutUser" method="post">
-				<input type="submit" value="Logout"/>
-			</form>
-		</footer>
 	</div>
 </body>
 </html>

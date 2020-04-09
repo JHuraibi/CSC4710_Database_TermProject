@@ -25,7 +25,7 @@ import java.util.List;
 
 @WebServlet("/UserDAO")
 public class UserDAO extends HttpServlet {
-    //	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
@@ -80,22 +80,22 @@ public class UserDAO extends HttpServlet {
                 "UNIQUE KEY (username) );";
 
         SQL_populateTable = "INSERT INTO users (username, password, firstName, lastName, email) values " +
-                "('user_0', 'pass_0', 'FName0', 'LName0', '0@email.com'), " +
-                "('user_1', 'pass_1', 'FName1', 'LName1', '1@email.com'), " +
-                "('user_2', 'pass_2', 'FName2', 'LName2', '2@email.com'), " +
-                "('user_3', 'pass_3', 'FName3', 'LName3', '3@email.com'), " +
-                "('user_4', 'pass_4', 'FName4', 'LName4', '4@email.com'), " +
-                "('user_5', 'pass_5', 'FName5', 'LName5', '5@email.com'), " +
-                "('user_6', 'pass_6', 'FName6', 'LName6', '6@email.com'), " +
-                "('user_7', 'pass_7', 'FName7', 'LName7', '7@email.com'), " +
-                "('user_8', 'pass_8', 'FName8', 'LName8', '8@email.com'), " +
-                "('user_9', 'pass_9', 'FName9', 'LName9', '9@email.com');";
+                "('user_0', 'pass0', 'FName0', 'LName0', '0@email.com'), " +
+                "('user_1', 'pass1', 'FName1', 'LName1', '1@email.com'), " +
+                "('user_2', 'pass2', 'FName2', 'LName2', '2@email.com'), " +
+                "('user_3', 'pass3', 'FName3', 'LName3', '3@email.com'), " +
+                "('user_4', 'pass4', 'FName4', 'LName4', '4@email.com'), " +
+                "('user_5', 'pass5', 'FName5', 'LName5', '5@email.com'), " +
+                "('user_6', 'pass6', 'FName6', 'LName6', '6@email.com'), " +
+                "('user_7', 'pass7', 'FName7', 'LName7', '7@email.com'), " +
+                "('user_8', 'pass8', 'FName8', 'LName8', '8@email.com'), " +
+                "('user_9', 'pass9', 'FName9', 'LName9', '9@email.com');";
 
         connect_func();                                                         // Ensure active connection
         statement = connect.createStatement();
         statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");                  // Disable foreign key constraints (req'd to drop tables w/ references)
 
-        statement.executeUpdate(SQL_dropTable);                                // Drop any preexisting Users table
+        statement.executeUpdate(SQL_dropTable);                                	// Drop any preexisting Users table
         statement.executeUpdate(SQL_createTable);                               // Establish new Table
         statement.executeUpdate(SQL_populateTable);                             // Populate Table w/ Predefined initial values
 
@@ -149,8 +149,8 @@ public class UserDAO extends HttpServlet {
         while (resultSet.next()) {
             numberOfAnimalsPosted++;
         }
-
-        return numberOfAnimalsPosted >= 5;              // Using ">" to handle unforeseen scenario of >5 posts
+		System.out.println("NUMBER FOUND: " + numberOfAnimalsPosted);
+        return numberOfAnimalsPosted >= 5;              // Using ">=" to handle unforeseen scenario of >5 posts
 /*
 
         int number;
@@ -243,7 +243,7 @@ public class UserDAO extends HttpServlet {
     }
 
 
-    public boolean update(User user) throws SQLException {
+    public boolean update(User user, String currentUsername) throws SQLException {
 
         String SQL_updateUser;
         boolean rowUpdated;
@@ -251,7 +251,7 @@ public class UserDAO extends HttpServlet {
         connect_func();
 
         SQL_updateUser = "UPDATE users SET username=?, password=?, firstName=?, lastName=?, email=?" +
-                "WHERE animalID = ?";
+                "WHERE username = ?";
 
         preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_updateUser);
         preparedStatement.setString(1, user.username);
@@ -259,6 +259,7 @@ public class UserDAO extends HttpServlet {
         preparedStatement.setString(3, user.firstName);
         preparedStatement.setString(4, user.lastName);
         preparedStatement.setString(5, user.email);
+        preparedStatement.setString(6, currentUsername);						// Row is located by the user's EXISTING username
         rowUpdated = preparedStatement.executeUpdate() > 0;
 
         closeAndDisconnectAll();

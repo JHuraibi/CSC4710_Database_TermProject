@@ -23,7 +23,7 @@ import java.util.List;
 
 @WebServlet("/TraitDAO")
 public class TraitDAO {
-//  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;		// Used w/ class Serializable
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
@@ -64,7 +64,7 @@ public class TraitDAO {
                                         "trait varchar(60) NOT NULL, " +
                                         "animalID INTEGER NOT NULL, " +
                                         "PRIMARY KEY (trait, animalID)," +
-                                        "FOREIGN KEY (animalID) REFERENCES Animals(animalID) );";
+                                        "FOREIGN KEY (animalID) REFERENCES Animals(animalID) ON DELETE CASCADE ON UPDATE CASCADE); ";
 
         connect_func();                                                         // Ensure active connection
         statement = connect.createStatement();                                  // Create the statement

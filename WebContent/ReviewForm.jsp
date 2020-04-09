@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link href="http://localhost:8080/4710_TermProject/CSS/stylesheet.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 	<title>Add Animal</title>
 </head>
 <body>
@@ -187,14 +187,6 @@
 		color: #000033;
 		font-weight: bold;
 	}
-	
-	footer {
-		font-size: 0.70em;
-		font-style: italic;
-		padding: 10px;
-		text-align: center;
-		background-color: #ffffff;
-		margin-left: 170px;
-	}
+
 
 </style>

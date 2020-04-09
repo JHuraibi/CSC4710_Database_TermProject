@@ -30,6 +30,8 @@ import javax.servlet.http.HttpSession;
 //          The limitation of this method however, is that any actions needed with any of               //
 //          those objects needs to be carried out before closeAndDisconnectAll() is called.             //
 //          A good example of this is UserDAO.validateUser().                                           //
+//		- The Reviews table is a perfect example for [ON DELETE CASCADE] and [ON UPDATE CASCADE]		//
+//			and when to use one, both, or neither														//
 //                                                                                                      //
 //   !! - The Built-in Objects (e.g. session, response, request, out) are accessed in TWO very          //
 //          different ways dependent on where they're used. In servlets (e.g. ControlServlet.java)      //
@@ -54,7 +56,7 @@ import javax.servlet.http.HttpSession;
 //                                                                                                      //
 //------------------------------------------------------------------------------------------------------//
 
-/*                                            ~   ~   ~                                                 */
+/*                                        ~   ~   ~ | ~   ~   ~                                         */
 
 //------------------------------------------------------------------------------------------------------//
 // Notes:                                                                                               //
@@ -68,11 +70,16 @@ import javax.servlet.http.HttpSession;
 //          (e.g Listing all animals and listing a user's fav animals will both use AdoptionList.jsp,   //
 //          but the List<Animals> list passed to JSP will have different contents: either ALL animals   //
 //          or a User's fav)                                                                            //
-//      - The boolean returns of CRUD methods (e.g. insertUser()) are only being used for testing       //
-//          and demo purposes)                                                                          //
+//      - The boolean returns of CRUD methods (e.g. insertUser() ) are only being used for testing      //
+//          and demo purposes currently)                                                                //
 //      - Our Traits table is set up to associate animal traits to the animal's ID. However, animalID   //
 //          is auto-incremented. Thus, we need a special SELECT statement to get the animal's ID from   //
-//          the DB once it is added.                                                                    //
+//          the DB once it is added.																	//
+// !! CRITICAL: Determine when to keep boolean method or split into separate JSP files (this seems likely)
+//      - Because we are reusing out JSP list files, when we list a user's favorites 					//
+//      	(animals or breeders) we will be setting a boolean value will be set to false				//
+//      	to skipping over extra items not relevant to a user's list									//
+//      	the appropriate outputs of the JSP. Will be set back to false once done.					//
 //                                                                                                      //
 //------------------------------------------------------------------------------------------------------//
 
@@ -91,6 +98,7 @@ public class ControlServlet extends HttpServlet {
 
     public void initializeAll(HttpServletResponse response)
             throws SQLException, IOException {
+
 
         userDAO         = new UserDAO();                                        // Initialize all the local DAO objects
         animalDAO       = new AnimalDAO();
@@ -125,7 +133,7 @@ public class ControlServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getServletPath();                // Store action (supplied by the JSP files)
+        String action = request.getServletPath();                				// Intended destination
 
         try {
             switch (action) {
@@ -133,7 +141,6 @@ public class ControlServlet extends HttpServlet {
                     initializeAll(response);                                    // Initialize components
                     break;
                 case "/CheckLogin":
-                    // GOOD
                     checkLogin(request, response);                              // Verify login information
                     break;
                 case "/LogoutUser":
@@ -141,11 +148,15 @@ public class ControlServlet extends HttpServlet {
                     logoutHelper(request, response);                            // Log out the current user
                     break;
 
-                // !! Note: [ case "/new" ] replaced with a simpler and more secure method (I think more secure)
+                // !! Note: [ case "/new" ] replaced with a simpler and more secure method (I THINK more secure..)
 
                 case "/UpdateUser":
-                    // IN PROGRESS
-                    updateUserForm(request, response);                          // Update User information
+                    // BASICALLY DONE (SEE COMMENTS AT updateUserForm() )
+                    prepForInfoUpdate(request, response);                          	// Update User information
+                    break;
+                case "/SubmitUpdate":
+                    // BASICALLY DONE (SEE COMMENTS AT updateUserForm() )
+                    updateUser(request, response);                          	// Submit the updated info to tables
                     break;
                 case "/InsertUser":
                     // TEST
@@ -158,7 +169,7 @@ public class ControlServlet extends HttpServlet {
                     // TEST
                     listAllBreeders(request, response);                         // Get a list of all breeders
                     break;
-                case "/BeginPostAnimalProcess":
+                case "/PostAnimal":
                     // TEST
                     checkNumberOfAnimalsPost(request, response);                // Check animals user posted is <5 (SUCCESS: Redirect to AnimalForm.jsp)
                     break;
@@ -180,8 +191,7 @@ public class ControlServlet extends HttpServlet {
                     processAnimalTraitSearch(request, response);                // Get a list of animals by trait
                     break;
                 case "/ReviewAnimal":
-                    // IMPLEMENT
-                    // Getting error "animal.animalID does not exist" AdoptionList.jsp
+                    // IMPLEMENT: add review to Review table
                     animalReviewFormHelper(request, response);                  // Attach User and Animal's IDs to request then load: ReviewForm.jsp
                     break;
                 case "/SubmitReview":
@@ -192,19 +202,23 @@ public class ControlServlet extends HttpServlet {
                     // IMPLEMENT
                     animalDeletionHelper(request, response);                    // Remove animal from adoption list (incl'd its traits and reviews)
                     break;
-                case "/ListFavoriteAnimals":
+				case "AddToMyFavoriteAnimals":
+					// IMPLEMENT
+					addToMyFavAnimals(request, response);                          // "Add" animal to user's favorite list
+					break;
+                case "/ListMyFavoriteAnimals":
                     // TEST
-                    showListFavAnimalsPage(request, response);                  // List a user's favorite animals (Will load AdoptionList.jsp)
+                    showFavAnimalsList(request, response);                  	// List a user's favorite animals (Will load AdoptionList.jsp)
                     break;
                 case "/ListFavoriteBreeders":
                     // TEST
-                    showListFavBreedersPage(request, response);                 // List a user's favorite breeders (Will load UsersList.jsp)
+                    showFavBreedersList(request, response);                 	// List a user's favorite breeders (Will load UsersList.jsp)
                     break;
                 default:
-                    System.out.println("\n[ SWITCH: default ]\n");
-                    response.sendRedirect("login.jsp");                         // Default action: Login page
+                    response.sendRedirect("Login.jsp");                         // Default action: Login page
                     break;
-            }
+
+            }// [ SWITCH ]
 
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -266,7 +280,7 @@ public class ControlServlet extends HttpServlet {
         username = request.getParameter("username");                            // Username of User to be modified
         password = request.getParameter("password");                            // Password of User to be modified
 
-        existingUser = userDAO.getUser(username, password);                     // Load the User (Will be used with <c:if ... >)
+        existingUser = userDAO.getUser(username, password);                     // Retrieve/Load the user (Type: User.java)
 
         request.setAttribute("user", existingUser);                             // Attach loaded User to request
 
@@ -321,27 +335,50 @@ public class ControlServlet extends HttpServlet {
     }
 
 
-    protected void updateUserForm(HttpServletRequest request, HttpServletResponse response)
+	protected void prepForInfoUpdate(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+    	String currentUsername;
+		String currentPassword;
+		String currentFirstName;
+		String currentLastName;
+		String currentEmail;
+		User currentUser;
+
+		currentUsername = (String) session.getAttribute("sUsername");           // Record user's current info
+		currentPassword = request.getParameter("password");
+		currentFirstName = request.getParameter("firstName");
+		currentLastName = request.getParameter("lastName");
+		currentEmail = request.getParameter("email");
+
+		currentUser = new User(currentUsername, currentPassword, currentFirstName, currentLastName, currentEmail);
+
+		request.setAttribute("currentUser", currentUser);                       // Attach the user's current info
+		response.sendRedirect("UpdateUsersForm.jsp");                           // Forward to UpdateUsersForm.jsp
+	}
+
+	// Fix the issue of user blank inputs (look into HTML book and hidden(?)
+    protected void updateUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
 
-        String username;
+        String currentUsername;
+        String newUsername;
         String password;
         String firstName;
         String lastName;
         String email;
-        int id;
         User updatedUser;
 
-        username = request.getParameter("username");                            // Extract data entered in by user (UsersForm.jsp)
+		currentUsername = (String) session.getAttribute("sUsername");
+        newUsername = request.getParameter("username");                         // Extract data entered in by user (UsersForm.jsp)
         password = request.getParameter("password");
         firstName = request.getParameter("firstName");
         lastName = request.getParameter("lastName");
         email = request.getParameter("email");
-        id = Integer.parseInt(request.getParameter("id"));
 
-        updatedUser = new User(id, username, password, firstName, lastName, email);     // Build the temp new User object
+        updatedUser = new User(newUsername, password, firstName, lastName, email);     // Build the temp new User object
 
-        userDAO.update(updatedUser);                                            // Update the Users table
+        userDAO.update(updatedUser, currentUsername);                           // Update the Users table
         response.sendRedirect("index.jsp");                                     // Route back to homepage
     }
 
@@ -362,12 +399,14 @@ public class ControlServlet extends HttpServlet {
         String ownersUsername;
         boolean userReachedMaxPosts;
 
+        System.out.println("CHECKING POST #");
         ownersUsername = (String) session.getAttribute("sUsername");            // Get the username of the current user
         userReachedMaxPosts = userDAO.maxAnimalsReached(ownersUsername);
 
         if (userReachedMaxPosts) {                                              // Query the Animals table (See: UserDAO.java)
             // IF TIME: Prompt to let user know max reached
-
+			//PrintWriter out = new PrintWriter("You have 5 animals already posted. Delete one to post a new one.");
+			System.out.println("MAX ANIMALS REACHED");
             response.sendRedirect("index.jsp");                                 // Maxed out, route back to homepage
         }
         else {
@@ -384,7 +423,7 @@ public class ControlServlet extends HttpServlet {
         String birthDate;
         int adoptionPrice;
         String traitsRawData;
-        String ownersUsername;
+        String owner;
         Animal newAnimal;
 
         name = request.getParameter("name");                                    // Extract data entered (AnimalForm.jsp)
@@ -392,9 +431,9 @@ public class ControlServlet extends HttpServlet {
         birthDate = request.getParameter("birthDate");
         adoptionPrice = Integer.parseInt(request.getParameter("adoptionPrice"));
         traitsRawData = request.getParameter("traits");
-        ownersUsername = (String) session.getAttribute("sUsername");            // "Owner" is simply the current user
+        owner = (String) session.getAttribute("sUsername");            			// Current user
                                                                                 // (↓ Below): Build the temp Animal object to add
-        newAnimal = new Animal(name, species, birthDate, adoptionPrice, ownersUsername);
+        newAnimal = new Animal(name, species, birthDate, adoptionPrice, owner);
         animalDAO.insert(newAnimal, traitsRawData);                             // Add the new animal to the Animals table
 
         response.sendRedirect("index.jsp");                                     // Return to home page
@@ -416,16 +455,9 @@ public class ControlServlet extends HttpServlet {
         listAnimals = animalDAO.listAllAnimals();                               // Build the list of animals
 
         request.setAttribute("listAnimals", listAnimals);						// Attach the List to a new session attribute
+		session.setAttribute("myAdoptions", false);                             // Ensure value of false (See: Notes)
 
 		dispatcher = request.getRequestDispatcher("AdoptionList.jsp");
-        dispatcher.forward(request, response);
-    }
-
-
-    protected void searchForAnimalByTrait(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-
-        dispatcher = request.getRequestDispatcher("SearchByTrait.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -449,11 +481,13 @@ public class ControlServlet extends HttpServlet {
             throws IOException, ServletException {
 
         int animalID;
+        String author;
 
         animalID = Integer.parseInt(request.getParameter("animalID"));          // Get the ID of the animal the user selected to review
+		author = (String) session.getAttribute("sUsername");            		// Current user
 
-        request.setAttribute("user", animalID);                             // Attach the animalID to request
         request.setAttribute("animalID", animalID);                             // Attach the animalID to request
+        request.setAttribute("author", author);                             	// Attach the author
 
         dispatcher = request.getRequestDispatcher("ReviewForm.jsp");
         dispatcher.forward(request, response);
@@ -497,35 +531,54 @@ public class ControlServlet extends HttpServlet {
         favBreederDAO.delete(animalID);                                         // Remove the animal from any users' favorite list */
     }
 
-    protected void showListFavAnimalsPage(HttpServletRequest request, HttpServletResponse response)
+    protected void addToMyFavAnimals(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ServletException, IOException {
+
+    	int animalID;															// Animal who the user wants to favorite
+		String usernameWhoFavd;                                                 // Person who fav'd is simply the current user
+
+    	animalID = Integer.parseInt(request.getParameter("animalID"));	// !! CRITICAL: check animalID is correct
+    	usernameWhoFavd = (String) session.getAttribute("sUsername");
+
+    	favAnimalDAO.insert(animalID, usernameWhoFavd);
+	}
+
+
+    protected void showFavAnimalsList(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
         String username;
         List<Animal> listFavAnimals;
 
-        // !! CHECK: Fav for certain user or current user?
         username = (String) session.getAttribute("sUsername");                  // Get current user's username
         listFavAnimals = favAnimalDAO.listAllFavAnimals(username);              // Get fav. animals for supplied username
 
         request.setAttribute("listAnimals", listFavAnimals);
+		session.setAttribute("myAdoptions", true);								// See: Notes
 
         dispatcher = request.getRequestDispatcher("AdoptionList.jsp");
         dispatcher.forward(request, response);
+
+        session.setAttribute("myAdoptions", false);								// Reset back to standard output
     }
 
-    protected void showListFavBreedersPage(HttpServletRequest request, HttpServletResponse response)
+    // CURRENT: Finish animal and users JSP lists
+    protected void showFavBreedersList(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
         String username;
         List<User> listFavBreeders;
 
-        username = request.getParameter("username");
-        listFavBreeders = favBreederDAO.listAllFavBreeders(username);           // Get all the fav. breeders for specified username
+        username = request.getParameter("sUsername");
+        listFavBreeders = favBreederDAO.listAllFavBreeders(username);           // Get all the fav. breeders for current user
 
         request.setAttribute("listUsers", listFavBreeders);
+		session.setAttribute("myBreeders", true);                               // See: Notes
 
         dispatcher = request.getRequestDispatcher("UsersList.jsp");
         dispatcher.forward(request, response);
+
+		session.setAttribute("myBreeders", false);                              // Reset back to standard output
     }
 
 }// END CLASS [ ControlServlet ]
