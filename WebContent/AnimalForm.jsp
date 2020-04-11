@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		 pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page
+		language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"
+%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -9,9 +11,9 @@
 </head>
 <body>
 	<%
+		// Verify a user logged in
 		if (session == null) {
-			System.out.println("index.jsp: USER NULL");
-			response.sendRedirect("AnimalForm.jsp");                // No user session established, reroute to login page
+			response.sendRedirect("login.jsp");
 		}
 	%>
 	<div id="wrapper">
@@ -19,8 +21,12 @@
 		<nav>
 			<ul>
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UsersForm.jsp">Edit User Information</a></li>
-				<li><a href="index.jsp">PLACEHOLDER</a></li>
+				<li><a href="PostAnimal">Put an Animal Up for Adoption</a></li>
+				<li><a href="ListAnimals">All Animals</a></li>
+				<li><a href="ListBreeders">All Breeders</a></li>
+				<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
+				<li><a href="MyAccount">My Account</a></li>
+				<li><a href="LogoutUser">Log Out</a></li>
 			</ul>
 		</nav>
 		<form action="SubmitNewAnimal" method="post">
@@ -40,7 +46,6 @@
 					<textarea
 							name="species" minlength="2" maxlength="12"
 							cols="45" rows="1" pattern="[A-Za-z]" required
-							value="<c:out value='${animal.species}' />"
 					></textarea>
 					</td>
 				</tr>
@@ -50,14 +55,16 @@
 						<!-- Checking date w/ JSP: https://bit.ly/2QZbzsy -->
 						<input
 								type="date" name="birthDate" min="1980-01-01" size="45"
-								required value="<c:out value='${animal.birthDate}' />"/>
+								required
+						/>
 					</td>
 				</tr>
 				<tr>
 					<th>Adoption Price: $</th>
 					<td>
-						<input type="number" name="adoptionPrice" min="0" maxlength="5" size="45"
-							   required value="<c:out value='${animal.adoptionPrice}' />"
+						<input
+								type="number" name="adoptionPrice" min="0" maxlength="5" size="45"
+								required
 						/>
 					</td>
 				</tr>
@@ -65,7 +72,7 @@
 					<th>Traits:</th>
 					<td>
 						<!-- CHECK: HTML5 removed support of "pattern" attribute -->
-						<!-- With "pattern" forces only letters and spaces to be entered -->
+						<!-- "pattern" forces only letters and spaces to be entered -->
 						<textarea
 								id="traits" name="traits"
 								cols="45" rows="2" maxlength="60" wrap="soft"
@@ -79,8 +86,6 @@
 					</td>
 				</tr>
 			</table>
-			<!-- !! CHECK: This next line may not be correct -->
-			<input type="hidden" name="animalID" value="${animal.animalID}">
 		</form>
 	</div>
 </body>

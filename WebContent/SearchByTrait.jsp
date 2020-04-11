@@ -17,21 +17,27 @@
 	<title>Search by Trait</title>
 </head>
 <body>
+	<%
+		// Verify a user logged in
+		if (session == null) {
+			response.sendRedirect("login.jsp");
+		}
+	%>
 	<div id="wrapper">
 		<nav>
 			<ul>
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UpdateUser">Edit My Info</a></li>
 				<li><a href="PostAnimal">Put an Animal Up for Adoption</a></li>
 				<li><a href="ListAnimals">All Animals</a></li>
 				<li><a href="ListBreeders">All Breeders</a></li>
-				<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
+				<li><a href="MyAccount">My Account</a></li>
+				<li><a href="LogoutUser">Log Out</a></li>
 			</ul>
 		</nav>
 		<h1>Search For Adoptable Animals</h1>
 		<p>Please select a trait to view all animals with the given trait</p>
 		
-		<%!String driverName = "com.mysql.cj.jdbc.Driver";%>
+		<%!String driverName = "com.mysql.jdbc.Driver";%>
 		<%!String DB_Location = "jdbc:mysql://127.0.0.1:3306/TermProject?";%>
 		<%!String DB_User = "root";%>
 		<%!String DB_Password = "admin";%>
@@ -52,7 +58,7 @@
 					preparedStatement = connect.prepareStatement(SQL_selectDistinctTraits);
 					resultSet = preparedStatement.executeQuery();
 			%>
-			<p>Select Trait :
+			<p>Select Trait:
 				<!-- Attribute "required" prevents a null-pointer exception -->
 				<select name="traits" required>
 					<%

@@ -23,7 +23,7 @@ import java.util.List;
 
 @WebServlet("/TraitDAO")
 public class TraitDAO {
-    private static final long serialVersionUID = 1L;		// Used w/ class Serializable
+    private static final long serialVersionUID = 1L;                            // For java.io.Serializable
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
@@ -53,7 +53,7 @@ public class TraitDAO {
     }
 
     // IF TIME: Fill with better example names
-    public void initializeTable() throws SQLException {
+    protected void initializeTable() throws SQLException {
 
         String SQL_dropTable;
         String SQL_createTable;
@@ -70,7 +70,7 @@ public class TraitDAO {
         statement = connect.createStatement();                                  // Create the statement
         statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");                  // Disable foreign key constraints (req'd to drop tables w/ references)
 
-        statement.executeUpdate(SQL_dropTable);                                // Drop any preexisting Trait table
+        statement.executeUpdate(SQL_dropTable);                                	// Drop any preexisting Trait table
         statement.executeUpdate(SQL_createTable);                               // Establish new Traits table
 
         statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
@@ -89,7 +89,6 @@ public class TraitDAO {
         addTraitsToTable("slow slimey boring gasy scaley", 10);
 
         closeAndDisconnectAll();
-
     }
 
 
@@ -99,7 +98,8 @@ public class TraitDAO {
 
         connect_func();
 
-        String SQL_insertTrait = "INSERT INTO traits(trait, animalID) VALUES (?, ?)";
+        String SQL_insertTrait = "INSERT " +
+								 "INTO traits(trait, animalID) values (?, ?)";
 
         for (String traitToAdd : parsedTraits) {
             preparedStatement = connect.prepareStatement(SQL_insertTrait);      // Prepare the statement
@@ -129,8 +129,14 @@ public class TraitDAO {
 	// CHANGE TO STRING[] LATER
     public ArrayList<String> getAnimalsTraits(int animalID) throws SQLException {
 
-        ArrayList<String> animalsTraits = new ArrayList<>();
-        String SQL_getAnimalsTraits = "SELECT * FROM traits WHERE animalID = ?";
+        ArrayList<String> animalsTraits;
+		String SQL_getAnimalsTraits;
+
+		animalsTraits = new ArrayList<>();
+
+        SQL_getAnimalsTraits = "SELECT * " +
+							   "FROM traits " +
+							   "WHERE animalID = ?";
 
         connect_func();
 
@@ -150,9 +156,15 @@ public class TraitDAO {
 
     public List<Animal> getAnimalsWithTrait(String trait) throws SQLException {
 
-        List<Animal> listOfAnimalsWithTrait = new ArrayList<>();
-        String SQL_getAnimalIDs = "SELECT * FROM traits WHERE trait = ?";
+        List<Animal> listOfAnimalsWithTrait;
+		String SQL_getAnimalIDs;
         Animal tempAnimal;
+
+		listOfAnimalsWithTrait = new ArrayList<>();
+
+        SQL_getAnimalIDs = "SELECT * " +
+						   "FROM traits " +
+						   "WHERE trait = ?";
 
         connect_func();
 
@@ -183,7 +195,10 @@ public class TraitDAO {
         String SQL_deleteTraits;
         boolean rowsDeleted;
 
-        SQL_deleteTraits = "DELETE FROM traits WHERE animalID = ?";
+        SQL_deleteTraits = "DELETE " +
+						   "FROM traits " +
+						   "WHERE animalID = ?";
+
         preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_deleteTraits);
         preparedStatement.setInt(1, animalID);
         rowsDeleted = preparedStatement.executeUpdate() > 0;

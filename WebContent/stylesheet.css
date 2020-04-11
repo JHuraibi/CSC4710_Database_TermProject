@@ -17,6 +17,7 @@
 	min-height: 700px;
 	margin-left: auto;
 	margin-right: auto;
+	margin-bottom: 50px;
 	box-sizing: border-box;
 }
 
@@ -27,7 +28,7 @@ header, nav, main, footer, aside {
 }
 
 body {
-	margin: 0;
+	margin: 10px 20px 30px;
 	font-family: Verdana, Arial, sans-serif;
 }
 
@@ -46,19 +47,21 @@ header {
 
 nav {
 	float: left;
-	width: 150px;
+	width: 200px;
 	margin: 0;
 	padding: 0;
 	text-align: left;
+	color: #aaaaaa;
 	background-color: #484b7b;
 }
 
 aside {
 	float: right;
-	width: 200px;
+	width: 150px;
 }
 
 main {
+	width: auto;
 	margin: 0 210px 0 160px;
 	padding: 1px 10px 20px 10px;
 	background-color: #ffffff;
@@ -107,16 +110,16 @@ nav ul {
 
 nav a {
 	text-decoration: none;
-	color: #000033;
+	color: #ffffff;
 	font-size: 0.8em;
 }
 
 nav a:link {
-	color: #006600;
+	color: #ffffff;
 }
 
 nav a:visited {
-	color: #003300;
+	color: #ffffff;
 }
 
 nav a:focus, nav a:hover {

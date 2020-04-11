@@ -25,132 +25,139 @@ import java.util.List;
 
 @WebServlet("/UserDAO")
 public class UserDAO extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private Connection connect = null;
-    private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
+	private static final long serialVersionUID = 1L;			        		// For java.io.Serializable
+	private Connection connect = null;
+	private Statement statement = null;
+	private PreparedStatement preparedStatement = null;
+	private ResultSet resultSet = null;
 
-    public UserDAO() {}
+	public UserDAO() {}
 
-    protected void connect_func() throws SQLException {
-        if (connect == null || connect.isClosed()) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-                throw new SQLException(e);
-            }
+	protected void connect_func() throws SQLException {
+		if (connect == null || connect.isClosed()) {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			}
+			catch (ClassNotFoundException e) {
+				throw new SQLException(e);
+			}
 
-            connect = (Connection) DriverManager
-                    .getConnection("jdbc:mysql://127.0.0.1:3306/TermProject?"
-                            + "user=root&password=admin");
-        }
-    }
-
-
-    private void closeAndDisconnectAll() throws SQLException {
-        if (resultSet != null) resultSet.close();
-        if (statement != null) statement.close();
-        if (preparedStatement != null) preparedStatement.close();
-        if (connect != null) connect.close();
-    }
+			connect = (Connection) DriverManager
+					.getConnection("jdbc:mysql://127.0.0.1:3306/TermProject?"
+								   + "user=root&password=admin");
+		}
+	}
 
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
+	private void closeAndDisconnectAll() throws SQLException {
+		if (resultSet != null) resultSet.close();
+		if (statement != null) statement.close();
+		if (preparedStatement != null) preparedStatement.close();
+		if (connect != null) connect.close();
+	}
 
 
-    public void initializeTable() throws SQLException {
-
-        String SQL_dropTable;
-        String SQL_createTable;
-        String SQL_populateTable;
-
-        SQL_dropTable = "DROP TABLE IF EXISTS users";
-
-        SQL_createTable = "CREATE TABLE IF NOT EXISTS users(" +
-                "username varchar(30) NOT NULL," +
-                "password varchar(24) NOT NULL," +
-                "firstName varchar(50) DEFAULT 'Anonymous'," +
-                "lastName varchar(50)," +
-                "email varchar(60) NOT NULL," +
-                "PRIMARY KEY (username)," +
-                "UNIQUE KEY (username) );";
-
-        SQL_populateTable = "INSERT INTO users (username, password, firstName, lastName, email) values " +
-                "('user_0', 'pass0', 'FName0', 'LName0', '0@email.com'), " +
-                "('user_1', 'pass1', 'FName1', 'LName1', '1@email.com'), " +
-                "('user_2', 'pass2', 'FName2', 'LName2', '2@email.com'), " +
-                "('user_3', 'pass3', 'FName3', 'LName3', '3@email.com'), " +
-                "('user_4', 'pass4', 'FName4', 'LName4', '4@email.com'), " +
-                "('user_5', 'pass5', 'FName5', 'LName5', '5@email.com'), " +
-                "('user_6', 'pass6', 'FName6', 'LName6', '6@email.com'), " +
-                "('user_7', 'pass7', 'FName7', 'LName7', '7@email.com'), " +
-                "('user_8', 'pass8', 'FName8', 'LName8', '8@email.com'), " +
-                "('user_9', 'pass9', 'FName9', 'LName9', '9@email.com');";
-
-        connect_func();                                                         // Ensure active connection
-        statement = connect.createStatement();
-        statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");                  // Disable foreign key constraints (req'd to drop tables w/ references)
-
-        statement.executeUpdate(SQL_dropTable);                                	// Drop any preexisting Users table
-        statement.executeUpdate(SQL_createTable);                               // Establish new Table
-        statement.executeUpdate(SQL_populateTable);                             // Populate Table w/ Predefined initial values
-
-        statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
-
-        System.out.println("Users Table: INITIALIZED");
-        closeAndDisconnectAll();                                                // Terminate any open connections
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 
 
-    public boolean validateLoginAttempt(String username, String password) throws SQLException {
+	protected void initializeTable() throws SQLException {
 
-        String SQL_findUserMatch;
-        boolean userLocated;
+		String SQL_dropTable;
+		String SQL_createTable;
+		String SQL_populateTable;
 
-        connect_func();
+		SQL_dropTable = "DROP TABLE IF EXISTS users";
 
-        SQL_findUserMatch = "SELECT * FROM users WHERE username = ? AND password = ?";
-        preparedStatement = connect.prepareStatement(SQL_findUserMatch);
-        preparedStatement.setString(1, username);
-        preparedStatement.setString(2, password);
-        resultSet = preparedStatement.executeQuery();
-        userLocated = resultSet.next(); // CHECK: This method proper?
+		SQL_createTable = "CREATE TABLE IF NOT EXISTS users(" +
+						  "username varchar(30) NOT NULL," +
+						  "password varchar(24) NOT NULL," +
+						  "firstName varchar(50) DEFAULT 'Anonymous'," +
+						  "lastName varchar(50)," +
+						  "email varchar(60) NOT NULL," +
+						  "PRIMARY KEY (username)," +
+						  "UNIQUE KEY (username) );";
 
-        if (userLocated) {
-            // Remove after testing
-            System.out.println("USERNAME OF FOUND: " + resultSet.getString("username"));
-            System.out.println("PASSWORD OF FOUND: " + resultSet.getString("password"));
-        }
+		SQL_populateTable = "INSERT INTO users (username, password, firstName, lastName, email) values " +
+							"('user_0', 'pass0', 'FName0', 'LName0', '0@email.com'), " +
+							"('user_1', 'pass1', 'FName1', 'LName1', '1@email.com'), " +
+							"('user_2', 'pass2', 'FName2', 'LName2', '2@email.com'), " +
+							"('user_3', 'pass3', 'FName3', 'LName3', '3@email.com'), " +
+							"('user_4', 'pass4', 'FName4', 'LName4', '4@email.com'), " +
+							"('user_5', 'pass5', 'FName5', 'LName5', '5@email.com'), " +
+							"('user_6', 'pass6', 'FName6', 'LName6', '6@email.com'), " +
+							"('user_7', 'pass7', 'FName7', 'LName7', '7@email.com'), " +
+							"('user_8', 'pass8', 'FName8', 'LName8', '8@email.com'), " +
+							"('user_9', 'pass9', 'FName9', 'LName9', '9@email.com');";
 
-        closeAndDisconnectAll();
-        return userLocated;
-    }
+		connect_func();                                                         // Ensure active connection
+		statement = connect.createStatement();
+		statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");                  // Disable foreign key constraints (req'd to drop tables w/ references)
+
+		statement.executeUpdate(SQL_dropTable);                                 // Drop any preexisting Users table
+		statement.executeUpdate(SQL_createTable);                               // Establish new Table
+		statement.executeUpdate(SQL_populateTable);                             // Populate Table w/ Predefined initial values
+
+		statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
+
+		closeAndDisconnectAll();                                                // Terminate any open connections
+		System.out.println("Users: DAO and TABLE INITIALIZED");
+	}
 
 
-    // [Return True]:  MAX REACHED
-    // [Return False]: GOOD TO POST AN ANIMAL
-    public boolean maxAnimalsReached(String username) throws SQLException {
+	public boolean validateLoginAttempt(String username, String password) throws SQLException {
 
-        String SQL_findUserMatch;
-        int numberOfAnimalsPosted = 0;
+		String SQL_findUserMatch;
+		boolean userLocated;
+
+		connect_func();
+
+		SQL_findUserMatch = "SELECT * " +
+							"FROM users " +
+							"WHERE username = ? AND password = ?";
+
+		preparedStatement = connect.prepareStatement(SQL_findUserMatch);
+		preparedStatement.setString(1, username);
+		preparedStatement.setString(2, password);
+		resultSet = preparedStatement.executeQuery();
+		userLocated = resultSet.next(); // CHECK: This method proper?
+
+		if (userLocated) {
+			// Remove after testing
+			System.out.println("USERNAME FOUND: " + resultSet.getString("username"));
+			System.out.println("PASSWORD FOUND: " + resultSet.getString("password"));
+		}
+
+		closeAndDisconnectAll();
+		return userLocated;
+	}
 
 
-        connect_func();
 
-        SQL_findUserMatch = "SELECT * FROM animals WHERE ownerUsername = ?";
-        preparedStatement = connect.prepareStatement(SQL_findUserMatch);
-        preparedStatement.setString(1, username);
-        resultSet = preparedStatement.executeQuery();
+	// [Return True]:  MAX REACHED
+	// [Return False]: GOOD TO POST AN ANIMAL
+	public boolean maxAnimalsReached(String username) throws SQLException {
 
-        while (resultSet.next()) {
-            numberOfAnimalsPosted++;
-        }
-		System.out.println("NUMBER FOUND: " + numberOfAnimalsPosted);
-        return numberOfAnimalsPosted >= 5;              // Using ">=" to handle unforeseen scenario of >5 posts
+		String SQL_findUserMatch;
+		int numberOfAnimalsPosted = 0;
+
+		connect_func();
+
+		SQL_findUserMatch = "SELECT * " +
+							"FROM animals " +
+							"WHERE ownerUsername = ?";
+
+		preparedStatement = connect.prepareStatement(SQL_findUserMatch);
+		preparedStatement.setString(1, username);
+		resultSet = preparedStatement.executeQuery();
+
+		while (resultSet.next()) {
+			numberOfAnimalsPosted++;
+		}
+
+		return numberOfAnimalsPosted >= 5;              // Using ">=" to handle unforeseen scenario of >5 posts
 /*
 
         int number;
@@ -167,106 +174,108 @@ public class UserDAO extends HttpServlet {
 
         return number >= 5;
 */
-    }
+	}
 
 
-    public List<User> listAllUsers() throws SQLException {
+	public List<User> listAllUsers() throws SQLException {
 
-        List<User> listUsers;
-        String SQL_getUsers;
-        User tempUser;
+		List<User> listUsers;
+		String SQL_getUsers;
+		User tempUser;
 
-        listUsers = new ArrayList<>();
-        SQL_getUsers = "SELECT * FROM users";
+		listUsers = new ArrayList<>();
+		SQL_getUsers = "SELECT * FROM users";
 
-        connect_func();
+		connect_func();
 
-        statement = (Statement) connect.createStatement();
-        resultSet = statement.executeQuery(SQL_getUsers);
+		statement = (Statement) connect.createStatement();
+		resultSet = statement.executeQuery(SQL_getUsers);
 
-        while (resultSet.next()) {
-            String username = resultSet.getString("username");                  // Extract data from each table row (i.e. Each user)
-            String password = resultSet.getString("password");
-            String firstName = resultSet.getString("firstName");
-            String lastName = resultSet.getString("lastName");
-            String email = resultSet.getString("email");
+		while (resultSet.next()) {
+			String username = resultSet.getString("username");                  // Extract data from each table row (i.e. Each user)
+			String password = resultSet.getString("password");
+			String firstName = resultSet.getString("firstName");
+			String lastName = resultSet.getString("lastName");
+			String email = resultSet.getString("email");
 
-            tempUser = new User(username, password, firstName, lastName, email);    // Intermediate temp User obj
+			tempUser = new User(username, password, firstName, lastName, email);    // Intermediate temp User obj
 
-            listUsers.add(tempUser);                                            // Add the just-made temp User to the list
-        }
+			listUsers.add(tempUser);                                            // Add the just-made temp User to the list
+		}
 
-        closeAndDisconnectAll();
-        return listUsers;                                                       // Return the list of Users (can be empty)
-    }
-
-
-    public boolean insert(User user) throws SQLException {
-
-        String SQL_insertUser;
-        boolean rowInserted;
-
-        connect_func();
-
-        SQL_insertUser = "INSERT INTO users (username, password, firstName, lastName, email) VALUES (?, ?, ?, ?, ?)";
-
-        preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_insertUser);
-        preparedStatement.setString(1, user.username);
-        preparedStatement.setString(2, user.password);
-        preparedStatement.setString(3, user.firstName);
-        preparedStatement.setString(4, user.lastName);
-        preparedStatement.setString(5, user.email);
-
-        rowInserted = preparedStatement.executeUpdate() > 0;
-
-        closeAndDisconnectAll();
-        return rowInserted;
-    }
+		closeAndDisconnectAll();
+		return listUsers;                                                       // Return the list of Users (can be empty)
+	}
 
 
-    public boolean delete(String username) throws SQLException {
+	public boolean insert(User user) throws SQLException {
 
-        String SQL_deleteUser;
-        boolean rowDeleted;
+		String SQL_insertUser;
+		boolean rowInserted;
 
-        connect_func();
+		connect_func();
 
-        SQL_deleteUser = "DELETE FROM users WHERE username = ?";
+		SQL_insertUser = "INSERT INTO users (username, password, firstName, lastName, email) VALUES (?, ?, ?, ?, ?)";
 
-        preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_deleteUser);
-        preparedStatement.setString(1, username);
+		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_insertUser);
+		preparedStatement.setString(1, user.username);
+		preparedStatement.setString(2, user.password);
+		preparedStatement.setString(3, user.firstName);
+		preparedStatement.setString(4, user.lastName);
+		preparedStatement.setString(5, user.email);
 
-        rowDeleted = preparedStatement.executeUpdate() > 0;
+		rowInserted = preparedStatement.executeUpdate() > 0;
 
-        closeAndDisconnectAll();
-        return rowDeleted;
-    }
+		closeAndDisconnectAll();
+		return rowInserted;
+	}
 
 
-    public boolean update(User user, String currentUsername) throws SQLException {
+	public boolean delete(String username) throws SQLException {
 
-        String SQL_updateUser;
-        boolean rowUpdated;
+		String SQL_deleteUser;
+		boolean rowDeleted;
 
-        connect_func();
+		connect_func();
 
-        SQL_updateUser = "UPDATE users SET username=?, password=?, firstName=?, lastName=?, email=?" +
-                "WHERE username = ?";
+		SQL_deleteUser = "DELETE " +
+						 "FROM users " +
+						 "WHERE username = ?";
 
-        preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_updateUser);
-        preparedStatement.setString(1, user.username);
-        preparedStatement.setString(2, user.password);
-        preparedStatement.setString(3, user.firstName);
-        preparedStatement.setString(4, user.lastName);
-        preparedStatement.setString(5, user.email);
-        preparedStatement.setString(6, currentUsername);						// Row is located by the user's EXISTING username
-        rowUpdated = preparedStatement.executeUpdate() > 0;
+		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_deleteUser);
+		preparedStatement.setString(1, username);
 
-        closeAndDisconnectAll();
+		rowDeleted = preparedStatement.executeUpdate() > 0;
 
-        return rowUpdated;
-    }
+		closeAndDisconnectAll();
+		return rowDeleted;
+	}
 
+
+	public boolean update(User user, String currentUsername) throws SQLException {
+
+		String SQL_updateUser;
+		boolean rowUpdated;
+
+		connect_func();
+
+		SQL_updateUser = "UPDATE users " +
+						 "SET username=?, password=?, firstName=?, lastName=?, email=?" +
+						 "WHERE username = ?";
+
+		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_updateUser);
+		preparedStatement.setString(1, user.username);
+		preparedStatement.setString(2, user.password);
+		preparedStatement.setString(3, user.firstName);
+		preparedStatement.setString(4, user.lastName);
+		preparedStatement.setString(5, user.email);
+		preparedStatement.setString(6, currentUsername);                        // Row is located by the user's EXISTING username
+		rowUpdated = preparedStatement.executeUpdate() > 0;
+
+		closeAndDisconnectAll();
+
+		return rowUpdated;
+	}
 
 	/*public int retrieveUserID(String username, String password) throws SQLException {
 
@@ -286,35 +295,37 @@ public class UserDAO extends HttpServlet {
     }*/
 
 
-    public User getUser(String usernameToGet, String passwordToGet) throws SQLException {
+	public User getUser(String usernameToGet, String passwordToGet) throws SQLException {
 
-        String SQL_getUser;
-        User user = null;                                                       // Init. to null to handle User not existing
+		String SQL_getUser;
+		User user = null;                                                       // Init. to null to handle User not existing
 
-        SQL_getUser = "SELECT * FROM users WHERE username = ? AND password = ?";
+		SQL_getUser = "SELECT * " +
+					  "FROM users " +
+					  "WHERE username = ? AND password = ?";
 
-        connect_func();
+		connect_func();
 
-        preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_getUser);
-        preparedStatement.setString(1, usernameToGet);
-        preparedStatement.setString(2, passwordToGet);
+		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_getUser);
+		preparedStatement.setString(1, usernameToGet);
+		preparedStatement.setString(2, passwordToGet);
 
-        resultSet = preparedStatement.executeQuery();
+		resultSet = preparedStatement.executeQuery();
 
-        if (resultSet.next()) {
-            String username = resultSet.getString("username");
-            String password = resultSet.getString("password");
-            String firstName = resultSet.getString("firstName");
-            String lastName = resultSet.getString("lastName");
-            String email = resultSet.getString("email");
+		if (resultSet.next()) {
+			String username = resultSet.getString("username");
+			String password = resultSet.getString("password");
+			String firstName = resultSet.getString("firstName");
+			String lastName = resultSet.getString("lastName");
+			String email = resultSet.getString("email");
 
-            user = new User(username, password, firstName, lastName, email);
-        }
+			user = new User(username, password, firstName, lastName, email);
+		}
 
-        closeAndDisconnectAll();
+		closeAndDisconnectAll();
 
-        return user;                                                            // Return user (or null if not found)
-    }
+		return user;                                                            // Return user (or null if not found)
+	}
 
 
 }// END CLASS [ UserDAO ]

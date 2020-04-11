@@ -26,7 +26,7 @@ import java.util.List;
 
 @WebServlet("/FavBreederDAO")
 public class FavBreederDAO extends HttpServlet {
-//	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;                            // For java.io.Serializable
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
@@ -62,7 +62,7 @@ public class FavBreederDAO extends HttpServlet {
     }
 
 
-	public void initializeTable() throws SQLException {
+	protected void initializeTable() throws SQLException {
 
 		String SQL_dropTable;
         String SQL_tableFavBreeders;
@@ -88,7 +88,7 @@ public class FavBreederDAO extends HttpServlet {
         statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");              	// Re-enable foreign key constraints
 
         closeAndDisconnectAll();
-        System.out.println("FavBreeders Table: INITIALIZED");
+		System.out.println("FavBreeders: DAO and TABLE INITIALIZED");
 	}
 
 
@@ -99,7 +99,10 @@ public class FavBreederDAO extends HttpServlet {
 		User breeder;
 
         listFavBreeders = new ArrayList<>();
-        SQL_getFavBreeders = "SELECT * FROM favBreeders WHERE whoFavdBreeder = ?";
+
+        SQL_getFavBreeders = "SELECT * " +
+							 "FROM favBreeders " +
+							 "WHERE whoFavdBreeder = ?";
 
 		connect_func();
 
@@ -131,7 +134,10 @@ public class FavBreederDAO extends HttpServlet {
 
 	    connect_func();
 
-        SQL_insertFavBreeders = "INSERT INTO favBreeders(breederUsername, username) VALUES (?, ?)";
+        SQL_insertFavBreeders = "INSERT " +
+								"INTO favBreeders(breederUsername, username) " +
+								"values (?, ?)";
+
 	    preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_insertFavBreeders);
         preparedStatement.setString(1, breederUsername);
         preparedStatement.setString(2, username);                                   // "username" is the foreign key referencing the user who fav'd the breeder
@@ -148,7 +154,9 @@ public class FavBreederDAO extends HttpServlet {
         boolean rowDeleted;
 
 		connect_func();
-        SQL_deleteFavBreeder = "DELETE FROM favBreeders WHERE username = ?";    // (About deleting) See: Notes
+        SQL_deleteFavBreeder = "DELETE " +
+							   "FROM favBreeders " +
+							   "WHERE username = ?";    						// See: Notes
 
 		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_deleteFavBreeder);
 		preparedStatement.setString(1, breederUsername);

@@ -9,9 +9,9 @@
 </head>
 <body>
 	<%
+		// Verify a user logged in
 		if (session == null) {
-			System.out.println("index.jsp: USER NULL");
-			response.sendRedirect("login.jsp");                // No user session established, reroute to login page
+			response.sendRedirect("login.jsp");
 		}
 	%>
 	<div id="wrapper">
@@ -25,15 +25,16 @@
 				<li><a href="ListAnimals">All Animals</a></li>
 				<li><a href="ListBreeders">All Breeders</a></li>
 				<li><a href="SearchByTrait.jsp">Search for an Animal</a></li>
-				<li><a href="index.jsp">My Account</a></li>
+				<li><a href="MyAccount">My Account</a></li>
 				<li><a href="LogoutUser">Log Out</a></li>
 			</ul>
 		</nav>
 		<main>
-		
+			<!-- IF TIME -->
+			<!-- Main empty. Probably add like "5 most recently posted animal" -->
 		</main>
 		<aside>
-			[ EMPTY AREA IF NEEDED ]
+			<!-- [ EMPTY AREA IF NEEDED ] -->
 		</aside>
 	</div>
 </body>

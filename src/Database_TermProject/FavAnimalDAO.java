@@ -27,7 +27,7 @@ import java.util.List;
 
 @WebServlet("/FavAnimalDAO")
 public class FavAnimalDAO extends HttpServlet {
-    private static final long serialVersionUID = 1L;		// Used w/ class Serializable
+    private static final long serialVersionUID = 1L;                            // For java.io.Serializable
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
@@ -64,7 +64,7 @@ public class FavAnimalDAO extends HttpServlet {
     }
 
 
-    public void initializeTable() throws SQLException {
+    protected void initializeTable() throws SQLException {
 
         String SQL_dropTable;
         String SQL_createTable;
@@ -88,10 +88,8 @@ public class FavAnimalDAO extends HttpServlet {
         statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
 
         closeAndDisconnectAll();
-        System.out.println("FavAnimals Table: INITIALIZED");
+		System.out.println("FavAnimals: DAO and TABLE INITIALIZED");
     }
-
-
 
 
     public List<Animal> listAllFavAnimals(String whoFavdAnimal) throws SQLException {
@@ -101,12 +99,15 @@ public class FavAnimalDAO extends HttpServlet {
         Animal tempAnimal;
 
         listFavAnimals = new ArrayList<>();
-        SQL_getAnimals = "SELECT * FROM favAnimals WHERE whoFavdAnimal = ?";
+
+        SQL_getAnimals = "SELECT * " +
+						 "FROM favAnimals " +
+						 "WHERE whoFavdAnimal = ?";
 
         connect_func();
-        preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_getAnimals);
+		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_getAnimals);
         preparedStatement.setString(1, whoFavdAnimal);
-        resultSet = statement.executeQuery(SQL_getAnimals);
+        resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
             int id = resultSet.getInt("");
@@ -125,14 +126,17 @@ public class FavAnimalDAO extends HttpServlet {
         return listFavAnimals;
     }
 
-    public boolean insert(int animalID, String usernameWhoFavd) throws SQLException {
+
+	public boolean insert(int animalID, String usernameWhoFavd) throws SQLException {
 
         String SQL_insertAnimal;
         boolean rowInserted;
 
         connect_func();
 
-        SQL_insertAnimal = "INSERT INTO favAnimals(animalID, username) VALUES (?, ?)";
+        SQL_insertAnimal = "INSERT " +
+						   "INTO favAnimals(animalID, whoFavdAnimal) " +
+						   "values (?, ?)";
 
         preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_insertAnimal);
         preparedStatement.setInt(1, animalID);
@@ -151,7 +155,9 @@ public class FavAnimalDAO extends HttpServlet {
 
         connect_func();
 
-        SQL_deleteAnimal = "DELETE FROM favAnimals WHERE animalID = ?";         // (About deleting) See: Notes
+        SQL_deleteAnimal = "DELETE " +
+						   "FROM favAnimals " +
+						   "WHERE animalID = ?";         						// See: Notes
 
         preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_deleteAnimal);
         preparedStatement.setInt(1, animalID);

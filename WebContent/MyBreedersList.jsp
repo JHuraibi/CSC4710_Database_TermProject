@@ -16,6 +16,7 @@
 		
 		boolean isRootUser = request.getAttribute("isRootUser") == "true";
 	%>
+	
 	<div id="wrapper">
 		<header>
 			<h1>All Breeders</h1>
@@ -31,17 +32,22 @@
 				<li><a href="LogoutUser">Log Out</a></li>
 			</ul>
 		</nav>
+		<aside>
+			<nav>
+				<ul>
+					<li><a href="index.jsp">Home</a></li>
+					<li><a href="">My Posts</a></li>
+					<li><a href="ListMyFavAnimals">My Animals</a></li>
+					<li><a href="ListMyFavBreeders">My Breeders</a></li>
+					<li><a href="UpdateUsersForm.jsp">Edit My Info</a></li>
+				</ul>
+			</nav>
+		</aside>
 		<main>
 			<table border="1" cellpadding="5">
 				<caption><h2>List of Current Users</h2></caption>
 				<tr>
 					<th>Username</th>
-					
-					<!-- Show passwords only for Root -->
-					<c:if test="<%=isRootUser%>">
-						<th>Password</th>
-					</c:if>
-					
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Email</th>
@@ -50,14 +56,12 @@
 				<c:forEach var="user" items="${listUsers}">
 					<tr>
 						<td><c:out value="${user.username}"/></td>
-						
-						<c:if test="<%=isRootUser%>">
-							<td><c:out value="${user.password}"/></td>
-						</c:if>
-						
 						<td><c:out value="${user.firstName}"/></td>
 						<td><c:out value="${user.lastName}"/></td>
 						<td><c:out value="${user.email}"/></td>
+						<td>
+							<a href="delete?id=<c:out value='${user.username}' />">Delete from my Fav Breeders</a>
+						</td>
 					</tr>
 				</c:forEach>
 			</table>

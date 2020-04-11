@@ -16,15 +16,19 @@
 	<title>New User Signup</title>
 </head>
 <body>
+	<%
+		// Verify a user logged in
+		if (session == null) {
+			response.sendRedirect("login.jsp");
+		}
+	%>
 	<div id="wrapper">
 		<header>
-			<h1>New User Information Form</h1>
+			<h1>New User Info</h1>
 		</header>
 		<nav>
 			<ul>
-				<li><a href="index.jsp">Home</a></li>
-				<li><a href="UpdateUser">Edit My Info</a></li>
-				<li><a href="index.jsp">My Account</a></li>
+				<li><a href="login.jsp">Cancel and Return to Login</a></li>
 			</ul>
 		</nav>
 		<form action="InsertUser" method="post">

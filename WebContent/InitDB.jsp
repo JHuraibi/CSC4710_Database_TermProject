@@ -11,6 +11,7 @@
 			display: inline-block;
 			min-width: 300px;
 			min-height: 200px;
+			align-content: center;
 		}
 	</style>
 	<title>Initialize Database</title>

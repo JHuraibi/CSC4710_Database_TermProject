@@ -17,7 +17,6 @@ import java.util.List;
 
 //------------------------------------------------------------------------------------------------------//
 // Notes:                                                                                               //
-//         - A similar method is used to add an animal's traits to the Traits table                     //
 //         - TraitDAO traitAccessor allows access to the methods in TraitDAO since we cannot extend     //
 //              two classes (HttpServlet AND TraitDAO)                                                  //
 //                                                                                                      //
@@ -26,7 +25,7 @@ import java.util.List;
 
 @WebServlet("/AnimalDAO")
 public class AnimalDAO extends HttpServlet {
-    private static final long serialVersionUID = 1L;		// Used w/ class Serializable
+	private static final long serialVersionUID = 1L;                            // For java.io.Serializable
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
@@ -36,57 +35,58 @@ public class AnimalDAO extends HttpServlet {
 		System.out.println("AnimalDAO: INITIALIZED");
 	}
 
-    protected void connect_func() throws SQLException {
-        if (connect == null || connect.isClosed()) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-                throw new SQLException(e);
-            }
+	protected void connect_func() throws SQLException {
+		if (connect == null || connect.isClosed()) {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			}
+			catch (ClassNotFoundException e) {
+				throw new SQLException(e);
+			}
 
-            connect = (Connection) DriverManager
-                    .getConnection("jdbc:mysql://127.0.0.1:3306/TermProject?"
-                            + "user=root&password=admin");
-        }
-    }
-
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
+			connect = (Connection) DriverManager
+					.getConnection("jdbc:mysql://127.0.0.1:3306/TermProject?"
+								   + "user=root&password=admin");
+		}
+	}
 
 
-    private void closeAndDisconnectAll() throws SQLException {
-        if (resultSet != null)          resultSet.close();
-        if (statement != null)          statement.close();
-        if (preparedStatement != null)  preparedStatement.close();
-        if (connect != null)            connect.close();
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 
 
-    // !! CRITICAL: Inserting to Animal Table works without: "FOREIGN KEY (ownerUsername) REFERENCES Users(username)"
-	public void initializeTable() throws SQLException {
+	private void closeAndDisconnectAll() throws SQLException {
+		if (resultSet != null) resultSet.close();
+		if (statement != null) statement.close();
+		if (preparedStatement != null) preparedStatement.close();
+		if (connect != null) connect.close();
+	}
+
+
+	// !! CRITICAL: Inserting to Animal Table works without: "FOREIGN KEY (ownerUsername) REFERENCES Users(username)"
+	protected void initializeTable() throws SQLException {
 
 		String SQL_clearExistingTable = "DROP TABLE IF EXISTS animals";
 
 		String SQL_tableAnimals = "CREATE TABLE IF NOT EXISTS animals (" +
-                                    "animalID INTEGER NOT NULL AUTO_INCREMENT," +
-                                    "name varchar(30)," +
-                                    "species varchar(24) NOT NULL," +
-                                    "birthDate varchar(10)," +
-                                    "adoptionPrice INTEGER DEFAULT 1, " +
-                                    "ownerUsername varchar(30)," +
-                                    "PRIMARY KEY (animalID)," +
-                                    "FOREIGN KEY (ownerUsername) REFERENCES Users (username) ON DELETE CASCADE ON UPDATE CASCADE); ";
+								  "animalID INTEGER NOT NULL AUTO_INCREMENT," +
+								  "name varchar(30)," +
+								  "species varchar(24) NOT NULL," +
+								  "birthDate varchar(10)," +
+								  "adoptionPrice INTEGER DEFAULT 1, " +
+								  "ownerUsername varchar(30)," +
+								  "PRIMARY KEY (animalID)," +
+								  "FOREIGN KEY (ownerUsername) REFERENCES Users (username) ON DELETE CASCADE ON UPDATE CASCADE); ";
 
 		// IF TIME: Fill with better example names
 
-        // Owner "user_1" 	maxes out allowed number of animal posts
-        // Hippopotamus		maxes out species length
-        // Whale 			maxes out the adoptionPrice
-        // Ox 				mins out?) is the shortest animal species allowed
-        // Tortoise 		maxes out birthDate allowed
+		// Owner "user_1" 	maxes out allowed number of animal posts
+		// Hippopotamus		maxes out species length
+		// Whale 			maxes out the adoptionPrice
+		// Ox 				mins out?) is the shortest animal species allowed
+		// Tortoise 		maxes out birthDate allowed
 		String SQL_populateAnimalTable = "INSERT INTO animals (name, species, birthDate, adoptionPrice, ownerUsername) values " +
 										 "('Animal_1', 'Cat',          '2018/1/01',    10, 'user_1'), " +
 										 "('Animal_2', 'Dog',          '2018/2/01',    20, 'user_1'), " +
@@ -97,42 +97,43 @@ public class AnimalDAO extends HttpServlet {
 										 "('Animal_7', 'Whale',        '2009/7/01', 99999, 'user_2'), " +
 										 "('Animal_8', 'Gorillaz',     '2000/1/9',     80, 'song_2'), " +
 										 "('Animal_9', 'Ox',           '2020/9/01',    90, 'user_9'), " +
-										 "('Animal_10','Tortoise',     '1980/01/01',  100, 'user_10')	;" ;
+										 "('Animal_10','Tortoise',     '1980/01/01',  100, 'user_10')	;";
 
-		connect_func();											                // Ensure active connection
+		connect_func();                                                         // Ensure active connection
 		statement = connect.createStatement();                                  // Create the statement
-        statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");                  // Disable foreign key constraints (req'd to drop tables w/ references)
+		statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");                  // Disable foreign key constraints (req'd to drop tables w/ references)
 
-        statement.executeUpdate(SQL_clearExistingTable);                        // Drop any preexisting Animals table
+		statement.executeUpdate(SQL_clearExistingTable);                        // Drop any preexisting Animals table
 		statement.executeUpdate(SQL_tableAnimals);                              // Establish new Animals table
 		statement.executeUpdate(SQL_populateAnimalTable);                       // Populate Table w/ Predefined initial values
 
-        statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
+		statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
 
-        closeAndDisconnectAll();
-        System.out.println("Animals Table: INITIALIZED");
+		closeAndDisconnectAll();
+		System.out.println("Animals: DAO and TABLE INITIALIZED");
 	}
 
 
 	public List<Animal> listAllAnimals() throws SQLException {
 
-        String SQL_allAnimals;
-        List<Animal> listAnimals;
-        ArrayList<String> listTraits;
-        Animal tempAnimal;
-        TraitDAO traitAccessor;
+		String SQL_allAnimals;
+		List<Animal> listAnimals;
+		ArrayList<String> listTraits;
+		Animal tempAnimal;
+		TraitDAO traitAccessor;
 
-        connect_func();
+		listAnimals = new ArrayList<>();
+		traitAccessor = new TraitDAO();
 
-		SQL_allAnimals = "SELECT * FROM animals";
-	    listAnimals = new ArrayList<>();
-        traitAccessor = new TraitDAO();
+		connect_func();
+
+		SQL_allAnimals = "SELECT * " +
+						 "FROM animals";
 
 		statement = (Statement) connect.createStatement();
 		resultSet = statement.executeQuery(SQL_allAnimals);
 
-        while (resultSet.next())
-		{
+		while (resultSet.next()) {
 			int animalID = resultSet.getInt("animalID");
 			String name = resultSet.getString("name");
 			String species = resultSet.getString("species");
@@ -142,26 +143,27 @@ public class AnimalDAO extends HttpServlet {
 
 			listTraits = traitAccessor.getAnimalsTraits(animalID);              // Get all the traits for this animal
 
-            tempAnimal = new Animal(animalID, name, species, birthDate, adoptionPrice, ownerUsername, listTraits);
+			tempAnimal = new Animal(animalID, name, species, birthDate, adoptionPrice, ownerUsername, listTraits);
 			listAnimals.add(tempAnimal);
 		}
 
-        closeAndDisconnectAll();
+		closeAndDisconnectAll();
 		return listAnimals;
 	}
 
-    // IF TIME: Change to insertHelper to de-couple and add boolean return for updateTraitsTable()
+	// IF TIME: Change to insertHelper to de-couple and add boolean return for updateTraitsTable()
 	public boolean insert(Animal animal, String traitsRawData) throws SQLException {
 
-	    String SQL_insertAnimal;
-        boolean rowInserted;
+		String SQL_insertAnimal;
+		boolean rowInserted;
 
-	    connect_func();
+		connect_func();
 
-        SQL_insertAnimal = "INSERT INTO animals(name, species, birthDate, adoptionPrice, ownerUsername) " +
-                            "values (?, ?, ?, ?, ?)";
+		SQL_insertAnimal = "INSERT " +
+						   "INTO animals(name, species, birthDate, adoptionPrice, ownerUsername) " +
+						   "values (?, ?, ?, ?, ?)";
 
-	    preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_insertAnimal);
+		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_insertAnimal);
 		preparedStatement.setString(1, animal.name);
 		preparedStatement.setString(2, animal.species);
 		preparedStatement.setString(3, animal.birthDate);
@@ -171,41 +173,46 @@ public class AnimalDAO extends HttpServlet {
 
 		updateTraitsTable(traitsRawData);                                       // Add the new animal's traits to the Traits table
 
-        closeAndDisconnectAll();
+		closeAndDisconnectAll();
 		return rowInserted;
 	}
 
-
+	// TODO: Not working
 	private void updateTraitsTable(String traitsRawData) throws SQLException {
 
-	    String SQL_getAnimalID;
-        TraitDAO traitDAO;                                                      // Establish access to the methods in TraitDAO
-        int newAnimalsID;
+		String SQL_getAnimalID;
+		TraitDAO traitDAO;                                                      // Establish access to the methods in TraitDAO
+		int newAnimalsID;
 
-        SQL_getAnimalID = "SELECT LAST_INSERT_ID() FROM animals";               // See: Notes
-        traitDAO = new TraitDAO();
+		traitDAO = new TraitDAO();
 
-        statement = (Statement) connect.createStatement();
-        resultSet = statement.executeQuery(SQL_getAnimalID);
-        newAnimalsID = resultSet.getInt("animalID");                            // Get the new animals ID (ID is AUTO_INCREMENT)
+		SQL_getAnimalID = "SELECT LAST_INSERT_ID() " +
+						  "FROM animals";               						// See: Notes
 
-        traitDAO.addTraitsToTable(traitsRawData, newAnimalsID);                 // Add the animal's traits
-    }
+		statement = (Statement) connect.createStatement();
+		resultSet = statement.executeQuery(SQL_getAnimalID);
+		newAnimalsID = resultSet.getInt("animalID");                            // Get the new animals ID (ID is AUTO_INCREMENT)
+
+		traitDAO.addTraitsToTable(traitsRawData, newAnimalsID);                 // Add the animal's traits
+	}
 
 
 	public boolean delete(int animalID) throws SQLException {
 
 		String SQL_deleteAnimal;
-        boolean rowDeleted;
+		boolean rowDeleted;
 
 		connect_func();
 
-        SQL_deleteAnimal = "DELETE FROM animals WHERE animalID = ?";
+		SQL_deleteAnimal = "DELETE " +
+						   "FROM animals " +
+						   "WHERE animalID = ?";
+
 		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_deleteAnimal);
 		preparedStatement.setInt(1, animalID);
 		rowDeleted = preparedStatement.executeUpdate() > 0;
 
-        closeAndDisconnectAll();
+		closeAndDisconnectAll();
 		return rowDeleted;
 	}
 
@@ -213,12 +220,13 @@ public class AnimalDAO extends HttpServlet {
 	public boolean update(Animal animal) throws SQLException {
 
 		String SQL_updateAnimal;
-        boolean rowUpdated;
+		boolean rowUpdated;
 
 		connect_func();
 
-        SQL_updateAnimal = "UPDATE animals SET Name=?, Species=?, BirthDate=?, AdoptionPrice=? " +
-                "WHERE animalID = ?";
+		SQL_updateAnimal = "UPDATE animals " +
+						   "SET Name=?, Species=?, BirthDate=?, AdoptionPrice=? " +
+						   "WHERE animalID = ?";
 
 		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_updateAnimal);
 		preparedStatement.setString(1, animal.name);                            // Attach updated details
@@ -228,7 +236,7 @@ public class AnimalDAO extends HttpServlet {
 		preparedStatement.setInt(5, animal.animalID);                           // ID of animal to update
 		rowUpdated = preparedStatement.executeUpdate() > 0;
 
-        closeAndDisconnectAll();
+		closeAndDisconnectAll();
 		return rowUpdated;
 	}
 
@@ -239,58 +247,144 @@ public class AnimalDAO extends HttpServlet {
 
 		connect_func();
 
-        SQL_getAnimal = "SELECT * FROM animals WHERE animalID = ?";
+		SQL_getAnimal = "SELECT * " +
+						"FROM animals " +
+						"WHERE animalID = ?";
+
 		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_getAnimal);
 		preparedStatement.setInt(1, animalID);
 		resultSet = preparedStatement.executeQuery();
 
-		if (resultSet.next())
-		{
+		if (resultSet.next()) {
 			String name = resultSet.getString("name");
 			String species = resultSet.getString("species");
 			String birthDate = resultSet.getString("birthDate");
 			int adoptionPrice = resultSet.getInt("adoptionPrice");
-            String ownersUsername = resultSet.getString("ownerID");
+			String ownersUsername = resultSet.getString("ownerID");
 
 			tempAnimal = new Animal(name, species, birthDate, adoptionPrice, ownersUsername);
 		}
 
-        closeAndDisconnectAll();
+		closeAndDisconnectAll();
 		return tempAnimal;
 	}
 
+	public String getAnimalName(int animalID) throws SQLException {
 
+		String SQL_getAnimal;
+		String animalName = null;												// See: ReviewForm.jsp for null usage
+
+		connect_func();
+
+		SQL_getAnimal = "SELECT * " +
+						"FROM animals " +
+						"WHERE animalID = ?";
+
+		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_getAnimal);
+		preparedStatement.setInt(1, animalID);
+		resultSet = preparedStatement.executeQuery();
+
+		if (resultSet.next()) {
+			animalName = resultSet.getString("name");
+		}
+
+		closeAndDisconnectAll();
+		return animalName;
+	}
+
+	public String getAnimalSpecies(int animalID) throws SQLException {
+
+		String SQL_getAnimal;
+		String animalSpecies = null;											// See: ReviewForm.jsp for null usage
+
+		connect_func();
+
+		SQL_getAnimal = "SELECT * " +
+						"FROM animals " +
+						"WHERE animalID = ?";
+
+		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_getAnimal);
+		preparedStatement.setInt(1, animalID);
+		resultSet = preparedStatement.executeQuery();
+
+		if (resultSet.next()) {
+			animalSpecies = resultSet.getString("species");
+		}
+
+		closeAndDisconnectAll();
+		return animalSpecies;
+	}
+
+	// [ MyAdoptions == Animals I Posted ]
+	public List<Animal> listMyAdoptions(String username) throws SQLException {
+
+		String SQL_findMyAdoptions;
+		List<Animal> listMyAdoptions;
+		ArrayList<String> listTraits;
+		Animal tempAnimal;
+		TraitDAO traitAccessor;
+
+		listMyAdoptions = new ArrayList<>();
+		traitAccessor = new TraitDAO();
+
+		connect_func();
+
+		SQL_findMyAdoptions = "SELECT * " +
+							  "FROM animals " +
+							  "WHERE ownerUsername = ?";
+
+		preparedStatement = connect.prepareStatement(SQL_findMyAdoptions);
+		preparedStatement.setString(1, username);
+		resultSet = preparedStatement.executeQuery();
+
+		while (resultSet.next()) {
+			int animalID = resultSet.getInt("animalID");
+			String name = resultSet.getString("name");
+			String species = resultSet.getString("species");
+			String birthDate = resultSet.getString("birthDate");
+			int adoptionPrice = resultSet.getInt("adoptionPrice");
+			String ownerUsername = resultSet.getString("ownerUsername");
+
+			listTraits = traitAccessor.getAnimalsTraits(animalID);              // Get all the traits for this animal
+
+			tempAnimal = new Animal(animalID, name, species, birthDate, adoptionPrice, ownerUsername, listTraits);
+			listMyAdoptions.add(tempAnimal);
+		}
+
+		closeAndDisconnectAll();
+		return listMyAdoptions;
+	}
 
 
 	// !! This method should ultimately be replaced
-    public List<Animal> getMostExpensive() throws SQLException {
+	public List<Animal> getMostExpensive() throws SQLException {
 
-        String SQL_getMostExpensive;
-        List<Animal> listAnimals;
-        Animal tempAnimal;
+		String SQL_getMostExpensive;
+		List<Animal> listAnimals;
+		Animal tempAnimal;
 
-        connect_func();
+		connect_func();
 
-        SQL_getMostExpensive = "SELECT * FROM animals";
-        listAnimals = new ArrayList<>();
+		SQL_getMostExpensive = "SELECT * FROM animals";
+		listAnimals = new ArrayList<>();
 
-        statement = (Statement) connect.createStatement();
-        resultSet = statement.executeQuery(SQL_getMostExpensive);
+		statement = (Statement) connect.createStatement();
+		resultSet = statement.executeQuery(SQL_getMostExpensive);
 
-        while (resultSet.next()) {
-            int animalID = resultSet.getInt("animalID");
-            String name = resultSet.getString("name");
-            String species = resultSet.getString("species");
-            String birthDate = resultSet.getString("birthDate");
-            int adoptionPrice = resultSet.getInt("adoptionPrice");
-            String ownerUsername = resultSet.getString("username");
+		while (resultSet.next()) {
+			int animalID = resultSet.getInt("animalID");
+			String name = resultSet.getString("name");
+			String species = resultSet.getString("species");
+			String birthDate = resultSet.getString("birthDate");
+			int adoptionPrice = resultSet.getInt("adoptionPrice");
+			String ownerUsername = resultSet.getString("username");
 
-            tempAnimal = new Animal(animalID, name, species, birthDate, adoptionPrice, ownerUsername);
-            listAnimals.add(tempAnimal);
-        }
+			tempAnimal = new Animal(animalID, name, species, birthDate, adoptionPrice, ownerUsername);
+			listAnimals.add(tempAnimal);
+		}
 
-        closeAndDisconnectAll();
-        return listAnimals;
-    }
+		closeAndDisconnectAll();
+		return listAnimals;
+	}
 
 }// END CLASS [ AnimalDAO ]

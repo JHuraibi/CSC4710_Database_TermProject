@@ -26,7 +26,7 @@ import java.util.List;
 
 @WebServlet("/ReviewDAO")
 public class ReviewDAO extends HttpServlet {
-//	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;                            // For java.io.Serializable
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
@@ -63,7 +63,7 @@ public class ReviewDAO extends HttpServlet {
     }
 
 
-	public void initializeTable() throws SQLException {
+	protected void initializeTable() throws SQLException {
 
         String SQL_dropTable;
         String SQL_tableReviews;
@@ -71,11 +71,12 @@ public class ReviewDAO extends HttpServlet {
 		SQL_dropTable = "DROP TABLE IF EXISTS reviews";
 
 		SQL_tableReviews = "CREATE TABLE IF NOT EXISTS reviews (" +
+						   			"reviewID INTEGER NOT NULL AUTO_INCREMENT, " +
                                     "animalID INTEGER NOT NULL, " +
-                                    "authorsUsername varchar(30) NOT NULL," +
                                     "rating varchar(9)," +
                                     "comments varchar(140)," +
-                                    "PRIMARY KEY (animalID)," +
+                                    "authorsUsername varchar(30) NOT NULL," +
+                                    "PRIMARY KEY (reviewID)," +
                                     "FOREIGN KEY (animalID) REFERENCES Animals(animalID) ON DELETE CASCADE ON UPDATE CASCADE," +
                                     "FOREIGN KEY (authorsUsername) REFERENCES Users(username) ON UPDATE CASCADE ); ";
 
@@ -90,7 +91,7 @@ public class ReviewDAO extends HttpServlet {
         statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
 
         closeAndDisconnectAll();
-        System.out.println("Reviews Table: INITIALIZED");
+		System.out.println("Reviews: DAO and TABLE INITIALIZED");
 	}
 
 	
@@ -101,11 +102,13 @@ public class ReviewDAO extends HttpServlet {
 
 	    connect_func();
 
-        SQL_insertReview = "INSERT INTO reviews(animalID, authorsUsername, rating, comment) VALUES (?, ?, ?, ?)";
+        SQL_insertReview = "INSERT " +
+						   "INTO reviews(animalID, rating, comment, author) " +
+						   "values (?, ?, ?, ?)";
 
 	    preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_insertReview);
 		preparedStatement.setInt(1, newReview.animalID);
-		preparedStatement.setString(2, newReview.authorUsername);
+		preparedStatement.setString(2, newReview.author);
 		preparedStatement.setString(3, newReview.rating);
 		preparedStatement.setString(4, newReview.comment);
 		rowInserted = preparedStatement.executeUpdate() > 0;
@@ -122,7 +125,10 @@ public class ReviewDAO extends HttpServlet {
         Review tempReview;
 
         listReviews = new ArrayList<>();
-		SQL_selectReview = "SELECT * FROM reviews WHERE animalID = ?";
+
+		SQL_selectReview = "SELECT * " +
+						   "FROM reviews " +
+						   "WHERE animalID = ?";
 
 		connect_func();
 
@@ -133,12 +139,12 @@ public class ReviewDAO extends HttpServlet {
 		
 		if (resultSet.next())
 		{
-			// animalID = resultSet.getInt("animalID");                           // animalID passed in, this line left for reading
-			String authorUsername = resultSet.getString("birthDate");
+				   animalID = resultSet.getInt("animalID");                           // animalID passed in, this line left for reading
             String rating = resultSet.getString("rating");
 			String comment = resultSet.getString("comment");
+			String author = resultSet.getString("author");
 
-            tempReview = new Review(animalID, authorUsername, rating, comment);
+            tempReview = new Review(animalID, rating, comment, author);
             listReviews.add(tempReview);
 		}
 
@@ -152,9 +158,12 @@ public class ReviewDAO extends HttpServlet {
         String SQL_deleteReview;
         boolean rowsDeleted;
 
-        connect_func();
 
-        SQL_deleteReview = "DELETE FROM reviews WHERE aniamlID = ?";
+        SQL_deleteReview = "DELETE " +
+						   "FROM reviews " +
+						   "WHERE aniamlID = ?";
+
+        connect_func();
         preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_deleteReview);
         preparedStatement.setInt(1, animalID);
         rowsDeleted = preparedStatement.executeUpdate() > 0;
