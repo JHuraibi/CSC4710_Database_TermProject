@@ -13,6 +13,8 @@
 		if (session == null) {
 			response.sendRedirect("login.jsp");
 		}
+		
+		boolean isRootUser = request.getAttribute("isRootUser") == "true";
 	%>
 	<div id="wrapper">
 		<header>
@@ -32,10 +34,21 @@
 		<main>
 			<!-- IF TIME -->
 			<!-- Main empty. Probably add like "5 most recently posted animal" -->
+			<!--  -->
 		</main>
 		<aside>
-			<!-- [ EMPTY AREA IF NEEDED ] -->
+			<nav>
+				<ul>
+					<li><a href="PartThree_8">[Q8]</a></li>
+					<li><a href="PartThree_9">[Q9]</a></li>
+					<li><a href="PartThree_10">[Q10]</a></li>
+				</ul>
+			</nav>
 		</aside>
+		
+		<footer>
+			<!-- [ EMPTY AREA IF NEEDED ] -->
+		</footer>
 	</div>
 </body>
 </html>

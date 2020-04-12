@@ -27,14 +27,13 @@
 			pageTitle = "Animal Review Form";
 		}
 		else if (animalSpecies == null) {
-			pageTitle = "Review " + animalName;
+			pageTitle = "Review \"" + animalName + "\"";
 		}
 		else {
-			pageTitle = "Review " + animalName + " the " + animalSpecies;
+			pageTitle = "Review \"" + animalName + "\" the " + animalSpecies;
 		}
-		
-		System.out.println(pageTitle);
 	%>
+	
 	<div id="wrapper">
 		<header>
 			<h1>Review an Animal</h1>
@@ -58,7 +57,7 @@
 				<tr>
 					<th>Animal Rating</th>
 					<td>
-						<select size="1" name="rating" id="ratingDropMenu">
+						<select size="1" name="rating" required>
 							<option>Select a Rating:</option>
 							<option value="Totes Adorbs">Totes Adorbs</option>
 							<option value="Adorbs">Adorbs</option>
@@ -70,7 +69,7 @@
 				<tr>
 					<th>Comments:</th>
 					<td>
-						<textarea id="comment" name="comment" cols="35" rows="4" maxlength="140" wrap="soft"></textarea>
+						<textarea id="comments" name="comments" cols="35" rows="4" maxlength="140" wrap="soft" required></textarea>
 					</td>
 				</tr>
 				<tr>

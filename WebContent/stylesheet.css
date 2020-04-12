@@ -38,7 +38,7 @@ header {
 	background-size: contain;
 	background-position: bottom;
 	background-repeat: repeat-x;
-	height: 120px;	/*Might have to make this the same px as image height*/
+	height: 120px;
 	color: #3399cc;
 	text-align: right;
 	padding: 0 20px;
@@ -53,6 +53,7 @@ nav {
 	text-align: left;
 	color: #aaaaaa;
 	background-color: #484b7b;
+	text-decoration: none;
 }
 
 aside {

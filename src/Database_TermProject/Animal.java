@@ -21,9 +21,6 @@ public class Animal {
 	protected ArrayList<String> animalsTraits;
 	public String[] traitsList;
 
-	public String[] testStringArr = {"ONE","TWO","THREE"};
-	public String testString = "Trait1 Trait2 Trait3";
-
 	public Animal() {}
 
 	public Animal(int animalID) {
@@ -68,16 +65,15 @@ public class Animal {
 	public void setAdoptionPrice(int adoptionPrice) { this.adoptionPrice = adoptionPrice; }
     public void setOwnerUsername(String ownerUsername) { this.ownersUsername = ownerUsername; }
 
-    public int getanimalID() { return animalID; }                               // !! DO NOT CHANGE LOWERCASE 'a'
+    public int getAnimalID() { return animalID; }
 	public String getName() { return name; }
 	public String getSpecies() { return species; }
 	public String getBirthDate() { return birthDate; }
     public int getAdoptionPrice() { return adoptionPrice; }
     public String getOwnerUsername() { return ownersUsername; }
-    public String[] gettraitsList() { return traitsList; }						// !! DO NOT CHANGE LOWERCASE 't'
+    public String[] getTraitsList() { return traitsList; }
 
 
-	// IF TIME: Give variables below better names
     private void convertBackToStringArr(){
 
 		String[] traitsForOutput;

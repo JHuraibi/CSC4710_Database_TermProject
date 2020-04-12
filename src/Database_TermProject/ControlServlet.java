@@ -1,15 +1,14 @@
 package Database_TermProject;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 //------------------------------------------------------------------------------------------------------//
 // [Project-Wide Notes]                                                                                 //
@@ -96,19 +95,22 @@ public class ControlServlet extends HttpServlet {
 	private ReviewDAO reviewDAO;
 	private FavAnimalDAO favAnimalDAO;
 	private FavBreederDAO favBreederDAO;
+	private AdminDAO adminDAO;
+	protected static boolean isRootUser;
 
 	public void initializeAll(HttpServletResponse response)
 			throws SQLException, IOException {
 
+		adminDAO = new AdminDAO();                                              // Initialize Admin DAO
 
-		userDAO = new UserDAO();                                        // Initialize all the local DAO objects
+		userDAO = new UserDAO();                                        		// Initialize all the local DAO objects
 		animalDAO = new AnimalDAO();
 		traitDAO = new TraitDAO();
 		reviewDAO = new ReviewDAO();
 		favAnimalDAO = new FavAnimalDAO();
 		favBreederDAO = new FavBreederDAO();
 
-		userDAO.initializeTable();                                     // Explicitly initialize all Tables
+		userDAO.initializeTable();                                     			// Explicitly initialize all Tables
 		animalDAO.initializeTable();
 		traitDAO.initializeTable();
 		reviewDAO.initializeTable();
@@ -116,9 +118,9 @@ public class ControlServlet extends HttpServlet {
 		favBreederDAO.initializeTable();
 
 		userDAO.insert(new User("root", "123",
-								"rootFName", "rootLName", "r@root.com"));                       // Add the root user to the Users Table
+								"rootFName", "rootLName", "r@root.com"));       // Add the root user to the Users Table
 
-		response.sendRedirect("Login.jsp");                                     // Redirect to Login page once initialization is complete
+		response.sendRedirect("Login.jsp");                                     // Redirect to Login page once initialization completes
 	}
 
 
@@ -132,7 +134,7 @@ public class ControlServlet extends HttpServlet {
 	//     --------------------------| SWITCH |---------------------------    //
 
 	// @formatter:off
-	// ^^IntelliJ is messing with my comment positions, turned off until switch statement
+	// ^^IntelliJ is messing with my comment positions, turned off until after switch statement
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -145,8 +147,17 @@ public class ControlServlet extends HttpServlet {
 				case "/InitializeDB":
 					initializeAll(response);                                    // Initialize components
 					break;
+				case "/PartThree_8":
+					//questionEight_Helper(request, response);
+					break;
+				case "/PartThree_9":
+					//questionNine_Helper(request, response);
+					break;
+				case "/PartThree_10":
+					//questionTen_Helper(request, response);
+					break;
 				default:
-					System.out.println("[ DEFAULT switch ]");
+					System.out.println("[ DEFAULT SWITCH CASE ]");
 					response.sendRedirect("login.jsp");                         // Default: Login page (and who said default had to be at the bottom? maybe it should actually:/)
 					break;
 
@@ -162,7 +173,7 @@ public class ControlServlet extends HttpServlet {
 
 			// Account Management
 				case "/MyAccount":
-					openMyAccount(request, response);                           // Load the user's account page (w/ their info)
+					myAccount(request, response);                           	// Load the user's account page (w/ their info)
 					break;
 				case "/UpdateUser":
 					prepForInfoUpdate(request, response);                       // Prepare for updating User info
@@ -180,7 +191,7 @@ public class ControlServlet extends HttpServlet {
 
 			// User's Items
 				case "/AddToCrate":
-					addToCrate(request, response);                              // Add the selected animal to the user's Crate
+					addToCrate(request, response);                              // Add the animal to the user's Crate
 					break;
 				case "/RemoveFromCrate":
 					removeFromCrate(request, response);                         // Remove animal from crate (iff in crate)
@@ -188,8 +199,14 @@ public class ControlServlet extends HttpServlet {
 				case "/AddFavAnimal":
 					addToMyFavAnimals(request, response);                       // Add animal to user's favorite list
 					break;
-				case "/DeleteAnimal":
-					animalDeletionHelper(request, response);                    // Remove animal from adoption list (incl'd its traits and reviews)
+				case "/RemoveFavAnimal":
+					removeFromMyFavAnimals(request, response);                  // Remove animal from user's favorite list
+					break;
+				case "/AddFavBreeder":
+					addToMyFavBreeders(request, response);                      // Add breeder to user's favorite list
+					break;
+				case "/RemoveFavBreeder":
+					removeFromMyFavBreeders(request, response);                 // Remove breeder user's favorite list
 					break;
 
 
@@ -204,14 +221,14 @@ public class ControlServlet extends HttpServlet {
 					listMyAdoptions(request, response);                         // List animals current user posted (Will load AdoptionList.jsp)
 					break;
 				case "/ListMyFavAnimals":
-					listFavAnimals(request, response);                          // List user's favorite animals (Will load AdoptionList.jsp)
+					listMyFavAnimals(request, response);                        // List user's favorite animals (Will load AdoptionList.jsp)
 					break;
 				case "/ListMyFavBreeders":
-					listFavBreeders(request, response);                         // List a user's favorite breeders (Will load UsersList.jsp)
+					listMyFavBreeders(request, response);                       // List a user's favorite breeders (Will load BreedersList.jsp)
 					break;
 
 
-			// Posting to website
+			// Website Data/Information
 				case "/PostAnimal":
 					prepForAnimalPost(request, response);                		// Check animals user posted is <5 (SUCCESS: Redirect to AnimalForm.jsp)
 					break;
@@ -224,6 +241,10 @@ public class ControlServlet extends HttpServlet {
 				case "/SubmitReview":
 					submitReview(request, response);                            // Have user enter a review (Will Load: ReviewForm.jsp)
 					break;
+				case "/DeleteAnimal":
+					animalDeletionHelper(request, response);                    // Delete animal from website
+					break;
+
 
 			// Searching
 				case "/ProcessAnimalTraitSearch":
@@ -241,6 +262,88 @@ public class ControlServlet extends HttpServlet {
 
 	// @formatter:ON
 
+
+	//     -------------------------| ADMIN |---------------------------    //
+
+	protected void questionEight_Helper(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+
+		List<User> listBreeders;
+		String tableCaption;                                                    // Title to be print in JSP
+
+		if (isRootUser) {
+			tableCaption = "Breeders with no Cray-Cray Reviews";
+
+			listBreeders = adminDAO.questionEight();                            // Build the list of all users currently in the DB
+
+			request.setAttribute("isRootUser", "true");                         // Easier to work w/ Strings than bool when in a JSP
+			request.setAttribute("listBreeders", listBreeders);
+			request.setAttribute("tableCaption", tableCaption);
+
+			dispatcher = request.getRequestDispatcher("BreedersList.jsp");
+		}
+		else {
+			System.out.println("ACCESS DENIED, REROUTING TO index.jsp");
+			dispatcher = request.getRequestDispatcher("index.jsp");
+		}
+
+		dispatcher.forward(request, response);
+	}
+
+
+	protected void questionNine_Helper(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+
+		List<User> listBreeders;
+		String tableCaption;													// Title to be print in JSP
+
+		if (isRootUser) {
+			tableCaption = "Breeders w/ 1 or More Reviews (All Cray or Cray-Cray)";
+
+			listBreeders = adminDAO.questionNine();                             // Build the list of all users currently in the DB
+
+			request.setAttribute("isRootUser", "true");                         // Easier to work w/ Strings than bool when in a JSP
+			request.setAttribute("listBreeders", listBreeders);
+			request.setAttribute("tableCaption", tableCaption);
+
+			dispatcher = request.getRequestDispatcher("BreedersList.jsp");
+		}
+		else {
+			System.out.println("ACCESS DENIED, REROUTING TO index.jsp");
+			dispatcher = request.getRequestDispatcher("index.jsp");
+		}
+
+		dispatcher.forward(request, response);
+	}
+
+
+	protected void questionTen_Helper(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+
+		List<User> listBreeders;
+		String tableCaption;                                                    // Title to be print in JSP
+
+		if (isRootUser) {
+			tableCaption = "Breeders That Have Posted At Least 1 Animal (None with a Cray-Cray Review";
+
+			listBreeders = adminDAO.questionTen();                              // Build the list of all users currently in the DB
+
+			request.setAttribute("isRootUser", "true");                         // Easier to work w/ Strings than bool when in a JSP
+			request.setAttribute("listBreeders", listBreeders);
+			request.setAttribute("tableCaption", tableCaption);
+
+			dispatcher = request.getRequestDispatcher("BreedersList.jsp");
+		}
+		else {
+			System.out.println("ACCESS DENIED, REROUTING TO index.jsp");
+			dispatcher = request.getRequestDispatcher("index.jsp");
+		}
+
+		dispatcher.forward(request, response);
+	}
+
+
+
 	//     -------------------------| METHODS |---------------------------    //
 
 	protected void checkLogin(HttpServletRequest request, HttpServletResponse response)
@@ -253,7 +356,9 @@ public class ControlServlet extends HttpServlet {
 
 		username = request.getParameter("username");                            // Extract login info typed in by user (i.e. from Login.jsp)
 		password = request.getParameter("password");
-		loginSuccessful = userDAO.validateLoginAttempt(username, password);     // Validate credentials
+
+		loginSuccessful = userDAO.validateLogin(username, password);     // Validate credentials
+		isRootUser = adminDAO.validateAdmin(username, password);				// Check if Root
 
 		if (loginSuccessful) {
 			System.out.println("LOGIN GOOD");
@@ -281,13 +386,14 @@ public class ControlServlet extends HttpServlet {
 
 		session = request.getSession();                                         // Load the session instance
 		session.invalidate();                                                   // Unbind the object of the current user
+		isRootUser = false;														// Probably not needed
 
 		request.setAttribute("loggedOut", true);
 		response.sendRedirect("Login.jsp");                                     // Return to login page (since no user logged in)
 	}
 
 
-	protected void openMyAccount(HttpServletRequest request, HttpServletResponse response)
+	protected void myAccount(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 
 		String username;
@@ -337,14 +443,14 @@ public class ControlServlet extends HttpServlet {
 		isRootAdmin = currentUsername.equals("root");                           // String.equals NOT "=="
 
 		if (isRootAdmin)
-			request.setAttribute("isRootUser", "true");                        // Easier to work w/ Strings than bool for JSP
+			request.setAttribute("isRootUser", "true");							// Easier to work w/ Strings than bool for JSP
 		else
 			request.setAttribute("isRootUser", "false");
 
-		listBreeders = userDAO.listAllUsers();                                  // Build the list of all users currently in the DB
-		request.setAttribute("listUsers", listBreeders);
+		listBreeders = userDAO.listAllBreeders();								// Build the list of all users currently in the DB
+		request.setAttribute("listBreeders", listBreeders);
 
-		dispatcher = request.getRequestDispatcher("UsersList.jsp");
+		dispatcher = request.getRequestDispatcher("BreedersList.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -486,8 +592,10 @@ public class ControlServlet extends HttpServlet {
 		birthDate = request.getParameter("birthDate");
 		adoptionPrice = Integer.parseInt(request.getParameter("adoptionPrice"));
 		traitsRawData = request.getParameter("traits");
-		owner = (String) session.getAttribute("sUsername");                        // Current user
-		// (↓ Below): Build the temp Animal object to add
+		owner = (String) session.getAttribute("sUsername");                     // Current user
+
+		// !! CRITICAL: Incorporate Bri's code
+																				// (↓ Below): Build the temp Animal object to add
 		newAnimal = new Animal(name, species, birthDate, adoptionPrice, owner);
 		animalDAO.insert(newAnimal, traitsRawData);                             // Add the new animal to the Animals table
 
@@ -563,15 +671,15 @@ public class ControlServlet extends HttpServlet {
 		int animalID;
 		String author;
 		String rating;
-		String comment;
+		String comments;
 		Review newReview;
 
-		animalID = Integer.parseInt(request.getParameter("animalID"));          // animalID is set when the link was clicked from the animal list
-		comment = request.getParameter("animalID");                             // Extract data entered (ReviewForm.jsp)
-		rating = request.getParameter("rating");
+		animalID = Integer.parseInt(request.getParameter("animalID"));          // animalID is recorded when the link was clicked from the animal list
+		rating = request.getParameter("rating");                                // Extract data entered (ReviewForm.jsp)
+		comments = request.getParameter("comments");
 		author = request.getParameter("author");
 
-		newReview = new Review(animalID, rating, comment, author);     			// Build temp Review object
+		newReview = new Review(animalID, rating, comments, author);     		// Build temp Review object
 
 		reviewDAO.insert(newReview);                                            // Add the new review
 
@@ -654,7 +762,54 @@ public class ControlServlet extends HttpServlet {
 	}
 
 
-	protected void listFavAnimals(HttpServletRequest request, HttpServletResponse response)
+	protected void removeFromMyFavAnimals(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+		int animalID;                                                           // Animal who the user wants to remove from favorites
+		String usernameWhoFavd;                                                 // Person who fav'd is simply the current user
+
+		animalID = Integer.parseInt(request.getParameter("animalID"));            // CRITICAL CHECK: check animalID is correct
+		usernameWhoFavd = (String) session.getAttribute("sUsername");
+
+		favAnimalDAO.insert(animalID, usernameWhoFavd);
+
+		dispatcher = request.getRequestDispatcher("MyAccount.jsp");
+		dispatcher.forward(request, response);
+	}
+
+
+	protected void addToMyFavBreeders(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+
+		String breederUsername;													// Username of breeder to add to favorites
+		String usernameWhoFavd;                                                 // Person who fav'd is simply the current user
+
+		breederUsername = request.getParameter("breederUsername");
+		usernameWhoFavd = (String) session.getAttribute("sUsername");
+
+		favBreederDAO.insert(breederUsername, usernameWhoFavd);
+
+		dispatcher = request.getRequestDispatcher("MyAccount.jsp");
+		dispatcher.forward(request, response);
+	}
+
+
+	protected void removeFromMyFavBreeders(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+
+		String breederUsername;                                                 // Username of breeder to delete from favorites
+		String usernameWhoFavd;                                                 // Which user's list to remove from
+
+		breederUsername = request.getParameter("breederUsername");
+		usernameWhoFavd = (String) session.getAttribute("sUsername");
+
+		favBreederDAO.delete(breederUsername, usernameWhoFavd);
+
+		dispatcher = request.getRequestDispatcher("MyAccount.jsp");
+		dispatcher.forward(request, response);
+	}
+
+
+	protected void listMyFavAnimals(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 
 		String username;
@@ -664,14 +819,14 @@ public class ControlServlet extends HttpServlet {
 		listFavAnimals = favAnimalDAO.listAllFavAnimals(username);              // Get fav. animals for supplied username
 
 		request.setAttribute("listAnimals", listFavAnimals);
-		request.setAttribute("myAdoptions", "false");                            // See: Notes
+		request.setAttribute("myAdoptions", "false");                           // See: Notes
 
 		dispatcher = request.getRequestDispatcher("AdoptionList.jsp");
 		dispatcher.forward(request, response);
 	}
 
 
-	protected void listFavBreeders(HttpServletRequest request, HttpServletResponse response)
+	protected void listMyFavBreeders(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 
 		String username;
@@ -680,9 +835,9 @@ public class ControlServlet extends HttpServlet {
 		username = request.getParameter("sUsername");
 		listFavBreeders = favBreederDAO.listAllFavBreeders(username);           // Get all the fav. breeders for current user
 
-		request.setAttribute("listUsers", listFavBreeders);
+		request.setAttribute("listFavBreeders", listFavBreeders);
 
-		dispatcher = request.getRequestDispatcher("MyBreedersList.jsp");
+		dispatcher = request.getRequestDispatcher("MyFavBreedersList.jsp");
 		dispatcher.forward(request, response);
 	}
 

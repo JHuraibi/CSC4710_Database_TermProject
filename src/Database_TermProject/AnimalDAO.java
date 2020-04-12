@@ -1,17 +1,12 @@
 package Database_TermProject;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +26,7 @@ public class AnimalDAO extends HttpServlet {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 
-	public AnimalDAO() {
-		System.out.println("AnimalDAO: INITIALIZED");
-	}
+	public AnimalDAO() { }
 
 	protected void connect_func() throws SQLException {
 		if (connect == null || connect.isClosed()) {
@@ -65,7 +58,6 @@ public class AnimalDAO extends HttpServlet {
 	}
 
 
-	// !! CRITICAL: Inserting to Animal Table works without: "FOREIGN KEY (ownerUsername) REFERENCES Users(username)"
 	protected void initializeTable() throws SQLException {
 
 		String SQL_clearExistingTable = "DROP TABLE IF EXISTS animals";
@@ -87,17 +79,18 @@ public class AnimalDAO extends HttpServlet {
 		// Whale 			maxes out the adoptionPrice
 		// Ox 				mins out?) is the shortest animal species allowed
 		// Tortoise 		maxes out birthDate allowed
-		String SQL_populateAnimalTable = "INSERT INTO animals (name, species, birthDate, adoptionPrice, ownerUsername) values " +
-										 "('Animal_1', 'Cat',          '2018/1/01',    10, 'user_1'), " +
-										 "('Animal_2', 'Dog',          '2018/2/01',    20, 'user_1'), " +
-										 "('Animal_3', 'Cat',          '2018/3/01',    30, 'user_1'), " +
-										 "('Animal_4', 'Phish',        '2018/4/01',   555, 'user_1'), " +
-										 "('Animal_5', 'Pangolin',     '2019/5/01',    50, 'user_1'), " +
-										 "('Animal_6', 'Hippopotamus', '2019/6/01', 10000, 'user_2'), " +
-										 "('Animal_7', 'Whale',        '2009/7/01', 99999, 'user_2'), " +
-										 "('Animal_8', 'Gorillaz',     '2000/1/9',     80, 'song_2'), " +
-										 "('Animal_9', 'Ox',           '2020/9/01',    90, 'user_9'), " +
-										 "('Animal_10','Tortoise',     '1980/01/01',  100, 'user_10')	;";
+		String SQL_populateTable = "INSERT INTO animals (name, species, birthDate, adoptionPrice, ownerUsername) values " +
+								   "('Animal_1', 'Cat',          '2018/1/01',    10, 'user_1'), " +
+								   "('Animal_2', 'Dog',          '2018/2/01',    20, 'user_1'), " +
+								   "('Animal_3', 'Cat',          '2018/3/01',    30, 'user_1'), " +
+								   "('Animal_4', 'Phish',        '2018/4/01',   555, 'user_1'), " +
+								   "('Animal_5', 'Pangolin',     '2019/5/01',    50, 'user_1'), " +
+								   "('Animal_6', 'Hippopotamus', '2019/6/01', 10000, 'user_2'), " +
+								   "('Animal_7', 'Whale',        '2009/7/01', 99999, 'user_2'), " +
+								   "('Animal_8', 'Gorillaz',     '2000/1/9',     80, 'song_2'), " +
+								   "('Animal_9', 'Ox',           '2020/9/01',    90, 'user_9'), " +
+								   "('Animal_10','Tortoise',     '1980/01/01',  100, 'user_10'), " +
+								   "('Animal_00','Toad',         '1999/01/01',    1, 'user_0');"	;
 
 		connect_func();                                                         // Ensure active connection
 		statement = connect.createStatement();                                  // Create the statement
@@ -105,7 +98,7 @@ public class AnimalDAO extends HttpServlet {
 
 		statement.executeUpdate(SQL_clearExistingTable);                        // Drop any preexisting Animals table
 		statement.executeUpdate(SQL_tableAnimals);                              // Establish new Animals table
-		statement.executeUpdate(SQL_populateAnimalTable);                       // Populate Table w/ Predefined initial values
+		statement.executeUpdate(SQL_populateTable);                       		// Populate Table w/ Predefined initial values
 
 		statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
 

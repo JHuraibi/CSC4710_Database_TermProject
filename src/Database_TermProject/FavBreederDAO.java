@@ -1,14 +1,12 @@
 package Database_TermProject;
 
-import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +124,6 @@ public class FavBreederDAO extends HttpServlet {
 	}
 
 
-    //public User(String username, String password, String firstName, String lastName, String email) {
 	public boolean insert(String breederUsername, String username) throws SQLException {
 
 	    String SQL_insertFavBreeders;
@@ -140,7 +137,7 @@ public class FavBreederDAO extends HttpServlet {
 
 	    preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_insertFavBreeders);
         preparedStatement.setString(1, breederUsername);
-        preparedStatement.setString(2, username);                                   // "username" is the foreign key referencing the user who fav'd the breeder
+        preparedStatement.setString(2, username);
 		rowInserted = preparedStatement.executeUpdate() > 0;
 
         closeAndDisconnectAll();
@@ -148,7 +145,7 @@ public class FavBreederDAO extends HttpServlet {
 	}
 
 
-	public boolean delete(String breederUsername) throws SQLException {
+	public boolean delete(String breederUsername, String usernameWhoFavd) throws SQLException {
 
 		String SQL_deleteFavBreeder;
         boolean rowDeleted;
@@ -156,10 +153,11 @@ public class FavBreederDAO extends HttpServlet {
 		connect_func();
         SQL_deleteFavBreeder = "DELETE " +
 							   "FROM favBreeders " +
-							   "WHERE username = ?";    						// See: Notes
+							   "WHERE username = ? and whoFavdBreeder = ?";
 
 		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_deleteFavBreeder);
 		preparedStatement.setString(1, breederUsername);
+		preparedStatement.setString(2, usernameWhoFavd);
 		rowDeleted = preparedStatement.executeUpdate() > 0;
 
         closeAndDisconnectAll();

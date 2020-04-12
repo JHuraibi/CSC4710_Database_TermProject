@@ -12,31 +12,31 @@ public class Review {
 	protected int reviewID;
 	protected int animalID;
 	protected String rating;
-	protected String comment;
+	protected String comments;
 	protected String author;
 
 	public Review() {}
 
-	public Review(int reviewID, int animalID, String rating, String comment, String author) {
-		this(animalID, rating, comment, author);
+	public Review(int reviewID, int animalID, String rating, String comments, String author) {
+		this(animalID, rating, comments, author);
 		this.reviewID = reviewID; }
 
-	public Review(int animalID, String rating, String comment, String author) {
+	public Review(int animalID, String rating, String comments, String author) {
 		this.animalID = animalID;
 		this.rating = rating;
-		this.comment = comment;
+		this.comments = comments;
 		this.author = author; }
 
 	public void setReviewID(int id) { this.reviewID = id; }
 	public void setAnimalID(int animalID) { this.animalID = animalID; }
 	public void setRating(String rating) { this.rating = rating; }
 	public void setAuthor(String author) { this.author = author; }
-	public void setComment(String comment) { this.comment = comment;}
+	public void setComments(String comments) { this.comments = comments;}
 
-	public int getreviewID() { return reviewID; }                               // !! DO NOT CHANGE LOWERCASE 'r'
-	public int getanimalID() { return animalID; }                               // !! DO NOT CHANGE LOWERCASE 'a'
-	public String getrating() { return rating; }                                // !! DO NOT CHANGE LOWERCASE 'r'
-	public String getcomment() { return comment; }                              // !! DO NOT CHANGE LOWERCASE 'c'
-	public String getauthor() { return author; }                                // !! DO NOT CHANGE LOWERCASE 'a'
+	public int getreviewID() { return reviewID; }
+	public int getanimalID() { return animalID; }
+	public String getrating() { return rating; }
+	public String getcomment() { return comments; }
+	public String getauthor() { return author; }
 
 }// END CLASS [ Review ]

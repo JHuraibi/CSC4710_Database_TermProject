@@ -1,11 +1,7 @@
 package Database_TermProject;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import javax.servlet.annotation.WebServlet;
 import java.sql.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,7 +95,8 @@ public class TraitDAO {
         connect_func();
 
         String SQL_insertTrait = "INSERT " +
-								 "INTO traits(trait, animalID) values (?, ?)";
+								 "INTO traits(trait, animalID) " +
+								 "values (?, ?)";
 
         for (String traitToAdd : parsedTraits) {
             preparedStatement = connect.prepareStatement(SQL_insertTrait);      // Prepare the statement

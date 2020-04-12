@@ -55,21 +55,14 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JAVA&#10;JSP" />
     <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/New folder (2)" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/WebContent/Images" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.webOptions" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent" />
-      <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent\Images" />
-      <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent\css" />
-      <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent\JSP" />
-      <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent\Stylesheets" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
       <recent name="Database_TermProject" />
@@ -80,6 +73,13 @@
       <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject" />
       <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\src" />
       <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent\WEB-INF" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent" />
+      <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent\Images" />
+      <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent\css" />
+      <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent\JSP" />
+      <recent name="C:\Users\Jay\OneDrive - Wayne State University\School\CSC 4710\Term Project\4710_Eclipse_Workspace\4710_TermProject\WebContent\Stylesheets" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -382,7 +382,8 @@
       <workItem from="1586471762045" duration="17611000" />
       <workItem from="1586540518441" duration="10478000" />
       <workItem from="1586553977843" duration="4203000" />
-      <workItem from="1586561226928" duration="13367000" />
+      <workItem from="1586561226928" duration="22088000" />
+      <workItem from="1586631485374" duration="15642000" />
     </task>
     <servers />
   </component>
@@ -454,10 +455,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1716" y="601" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1584751564363" />
-    <state x="398" y="0" width="960" height="1400" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586574277226">
+    <state x="398" y="0" width="960" height="1400" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586582595852">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="398" y="0" width="960" height="1400" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586574277226" />
+    <state x="398" y="0" width="960" height="1400" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586582595852" />
     <state x="444" y="451" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585880442354">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -470,10 +471,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="460" y="575" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1584742247080" />
-    <state x="93" y="100" width="1094" height="1207" maximized="true" key="DiffContextDialog" timestamp="1586393248301">
+    <state x="93" y="100" width="1094" height="1207" maximized="true" key="DiffContextDialog" timestamp="1586631619724">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="93" y="100" width="1094" height="1207" maximized="true" key="DiffContextDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586393248301" />
+    <state x="93" y="100" width="1094" height="1207" maximized="true" key="DiffContextDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586631619724" />
     <state x="420" y="459" width="895" height="656" key="FileChooserDialogImpl" timestamp="1586564050082">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -534,12 +535,12 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="860" y="444" width="1341" height="795" key="IDE.errors.dialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1585974097457" />
-    <state x="72" y="89" width="1186" height="1263" key="SettingsEditor" timestamp="1586568844453">
+    <state x="72" y="89" width="1186" height="1263" key="SettingsEditor" timestamp="1586638075915">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="347" y="130" width="1328" height="910" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586111974684" />
     <state x="-916" y="213" width="916" height="1225" key="SettingsEditor/0.0.2560.1400/-1050.0.1050.1640@-1050.0.1050.1640" timestamp="1584563207472" />
-    <state x="72" y="89" width="1186" height="1263" key="SettingsEditor/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586568844453" />
+    <state x="72" y="89" width="1186" height="1263" key="SettingsEditor/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586638075915" />
     <state x="1117" y="353" width="326" height="693" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1585786519249">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -548,10 +549,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1138" y="422" key="com.intellij.database.view.ui.DbObjectDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1585786530154" />
-    <state x="292" y="100" width="1454" height="1207" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1586393248301">
+    <state x="292" y="100" width="1454" height="1207" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1586631619724">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="292" y="100" width="1454" height="1207" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586393248301" />
+    <state x="292" y="100" width="1454" height="1207" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586631619724" />
     <state x="10" y="116" width="2459" height="1207" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1586574938007">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -570,19 +571,19 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="210" y="349" key="com.intellij.javaee.view.ServerArtifactsDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586317581205" />
-    <state x="1165" y="320" width="1100" height="941" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1586480813113">
+    <state x="1165" y="320" width="1100" height="941" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1586575875628">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1165" y="320" width="1100" height="941" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586480813113" />
-    <state x="-1057" y="820" width="1061" height="827" key="dock-window-1" timestamp="1586572958090">
-      <screen x="-1050" y="0" width="1050" height="1640" />
+    <state x="1165" y="320" width="1100" height="941" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586575875628" />
+    <state x="1273" y="0" width="1294" height="1407" key="dock-window-1" timestamp="1586642162108">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="-612" y="424" width="437" height="1384" key="dock-window-1/0.0.2560.1400/-1050.0.1050.1640@-1050.0.1050.1640" timestamp="1584570339716" />
-    <state x="-1057" y="820" width="1061" height="827" key="dock-window-1/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586572958090" />
-    <state x="-1058" y="-11" width="1063" height="827" maximized="true" key="dock-window-2" timestamp="1586564683737">
-      <screen x="-1050" y="0" width="1050" height="1640" />
+    <state x="1273" y="0" width="1294" height="1407" key="dock-window-1/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586642162108" />
+    <state x="820" y="298" width="1066" height="1385" key="dock-window-2" timestamp="1586581694422">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="-1058" y="-11" width="1063" height="827" maximized="true" key="dock-window-2/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586564683737" />
+    <state x="820" y="298" width="1066" height="1385" key="dock-window-2/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586581694422" />
     <state x="1273" y="0" width="1294" height="1407" key="dock-window-3" timestamp="1585597689074">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -599,11 +600,11 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="432" y="484" key="extract.method.dialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1584734303067" />
-    <state x="1292" y="116" width="1042" height="1129" key="find.popup" timestamp="1586574333336">
+    <state x="896" y="123" width="1459" height="1129" key="find.popup" timestamp="1586646697943">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="-988" y="5" width="942" height="750" key="find.popup/0.0.2560.1400/-1050.0.1050.1640@-1050.0.1050.1640" timestamp="1585606038976" />
-    <state x="1292" y="116" width="1042" height="1129" key="find.popup/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586574333336" />
+    <state x="896" y="123" width="1459" height="1129" key="find.popup/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586646697943" />
     <state x="952" y="568" width="707" height="305" key="org.intellij.images.editor.actions.BackgroundImageDialog" timestamp="1586401248585">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -612,10 +613,10 @@
       <screen x="-1050" y="0" width="1050" height="1640" />
     </state>
     <state x="-783" y="440" key="refactoring.ChangeSignatureDialog/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1584843144767" />
-    <state x="661" y="334" width="672" height="677" key="run.anything.popup" timestamp="1586574107326">
+    <state x="661" y="334" width="672" height="677" key="run.anything.popup" timestamp="1586631740007">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="661" y="334" width="672" height="677" key="run.anything.popup/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586574107326" />
+    <state x="661" y="334" width="672" height="677" key="run.anything.popup/0.0.2560.1400/-1050.0.1050.1640@0.0.2560.1400" timestamp="1586631740007" />
     <state x="596" y="510" key="scopes" timestamp="1586568840071">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

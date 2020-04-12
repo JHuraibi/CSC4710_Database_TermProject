@@ -1,17 +1,12 @@
 package Database_TermProject;
 
-import java.io.IOException;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.io.IOException;
 import java.sql.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,14 +85,14 @@ public class UserDAO extends HttpServlet {
 							"('user_6', 'pass6', 'FName6', 'LName6', '6@email.com'), " +
 							"('user_7', 'pass7', 'FName7', 'LName7', '7@email.com'), " +
 							"('user_8', 'pass8', 'FName8', 'LName8', '8@email.com'), " +
-							"('user_9', 'pass9', 'FName9', 'LName9', '9@email.com');";
+							"('user_9', 'pass9', 'FName9', 'LName9', '9@email.com');" ;
 
 		connect_func();                                                         // Ensure active connection
 		statement = connect.createStatement();
 		statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");                  // Disable foreign key constraints (req'd to drop tables w/ references)
 
 		statement.executeUpdate(SQL_dropTable);                                 // Drop any preexisting Users table
-		statement.executeUpdate(SQL_createTable);                               // Establish new Table
+		statement.executeUpdate(SQL_createTable);                               // Establish new Users Table
 		statement.executeUpdate(SQL_populateTable);                             // Populate Table w/ Predefined initial values
 
 		statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");                  // Re-enable foreign key constraints
@@ -107,7 +102,7 @@ public class UserDAO extends HttpServlet {
 	}
 
 
-	public boolean validateLoginAttempt(String username, String password) throws SQLException {
+	public boolean validateLogin(String username, String password) throws SQLException {
 
 		String SQL_findUserMatch;
 		boolean userLocated;
@@ -133,7 +128,6 @@ public class UserDAO extends HttpServlet {
 		closeAndDisconnectAll();
 		return userLocated;
 	}
-
 
 
 	// [Return True]:  MAX REACHED
@@ -177,13 +171,13 @@ public class UserDAO extends HttpServlet {
 	}
 
 
-	public List<User> listAllUsers() throws SQLException {
+	public List<User> listAllBreeders() throws SQLException {
 
-		List<User> listUsers;
+ 		List<User> listBreeders;
 		String SQL_getUsers;
 		User tempUser;
 
-		listUsers = new ArrayList<>();
+		 listBreeders = new ArrayList<>();
 		SQL_getUsers = "SELECT * FROM users";
 
 		connect_func();
@@ -200,11 +194,11 @@ public class UserDAO extends HttpServlet {
 
 			tempUser = new User(username, password, firstName, lastName, email);    // Intermediate temp User obj
 
-			listUsers.add(tempUser);                                            // Add the just-made temp User to the list
+			 listBreeders.add(tempUser);                                            // Add the just-made temp User to the list
 		}
 
 		closeAndDisconnectAll();
-		return listUsers;                                                       // Return the list of Users (can be empty)
+		return  listBreeders;                                                       // Return the list of Users (can be empty)
 	}
 
 
@@ -215,7 +209,9 @@ public class UserDAO extends HttpServlet {
 
 		connect_func();
 
-		SQL_insertUser = "INSERT INTO users (username, password, firstName, lastName, email) VALUES (?, ?, ?, ?, ?)";
+		SQL_insertUser = "INSERT " +
+						 "INTO users (username, password, firstName, lastName, email) " +
+						 "values (?, ?, ?, ?, ?)";
 
 		preparedStatement = (PreparedStatement) connect.prepareStatement(SQL_insertUser);
 		preparedStatement.setString(1, user.username);
